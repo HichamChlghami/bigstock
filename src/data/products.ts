@@ -1,0 +1,260 @@
+import { Product } from '../types';
+
+// Helper to generate more products for pagination demo
+const generateProducts = (): Product[] => {
+  const baseProducts: Product[] = [
+    {
+      id: '1',
+      name: 'Oxford Leather Brogue',
+      price: 189.00,
+      originalPrice: 240.00,
+      category: 'Shoes',
+      image: 'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=1000&auto=format&fit=crop',
+      images: [
+        'https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?q=80&w=1000&auto=format&fit=crop',
+      ],
+      description: 'Handcrafted from premium Italian leather, these Oxford brogues define sophistication.',
+      sizes: ['40', '41', '42', '43', '44'],
+      colors: ['Brown', 'Black'],
+      isNew: true,
+      rating: 4.8,
+      reviews: 124,
+      stockQuantity: 50,
+      inStock: true,
+      tags: ['men', 'formal'],
+      isFeatured: true
+    },
+    {
+      id: '2',
+      name: 'Minimalist Suede Loafer',
+      price: 145.00,
+      category: 'Shoes',
+      image: 'https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1560343090-f0409e92791a?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Effortless style meets comfort. These suede loafers feature a cushioned insole.',
+      sizes: ['39', '40', '41', '42'],
+      colors: ['Beige', 'Navy'],
+      rating: 4.5,
+      reviews: 89,
+      stockQuantity: 30,
+      inStock: true,
+      tags: ['men', 'casual']
+    },
+    {
+      id: '3',
+      name: 'Midnight Wool Overcoat',
+      price: 350.00,
+      originalPrice: 450.00,
+      category: 'Jackets',
+      image: 'https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=1000&auto=format&fit=crop'],
+      description: 'A timeless silhouette tailored from a luxurious wool blend.',
+      sizes: ['S', 'M', 'L', 'XL'],
+      colors: ['Charcoal', 'Black'],
+      isNew: true,
+      rating: 4.9,
+      reviews: 56,
+      stockQuantity: 20,
+      inStock: true,
+      tags: ['women', 'winter'],
+      isFeatured: true
+    },
+    {
+      id: '4',
+      name: 'Vintage Leather Biker',
+      price: 299.00,
+      category: 'Jackets',
+      image: 'https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1487222477894-8943e31ef7b2?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Rugged yet refined. This genuine leather biker jacket develops a unique patina.',
+      sizes: ['M', 'L', 'XL'],
+      colors: ['Brown'],
+      rating: 4.7,
+      reviews: 210,
+      stockQuantity: 15,
+      inStock: true,
+      tags: ['men', 'casual']
+    },
+    {
+      id: '5',
+      name: 'Victorian Damask Wallpaper',
+      price: 85.00,
+      category: 'Wallpaper',
+      image: 'https://images.unsplash.com/photo-1615800098779-1be4350c5957?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1615800098779-1be4350c5957?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Add a touch of regal elegance to your home with this textured damask wallpaper.',
+      colors: ['Gold/Black', 'Silver/White'],
+      rating: 4.6,
+      reviews: 34,
+      stockQuantity: 100,
+      inStock: true,
+      tags: ['home', 'decor']
+    },
+    {
+      id: '6',
+      name: 'Modern Geometric Print',
+      price: 65.00,
+      originalPrice: 80.00,
+      category: 'Wallpaper',
+      image: 'https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Contemporary geometric patterns suitable for feature walls.',
+      colors: ['Grey', 'Blue'],
+      rating: 4.4,
+      reviews: 78,
+      stockQuantity: 100,
+      inStock: true,
+      tags: ['home', 'decor']
+    },
+    {
+      id: '7',
+      name: 'Classic Men\'s Suit',
+      price: 450.00,
+      originalPrice: 599.00,
+      category: 'Men',
+      image: 'https://images.unsplash.com/photo-1593030761757-71fae45fa2e7?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1593030761757-71fae45fa2e7?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Tailored fit suit for the modern gentleman.',
+      sizes: ['48', '50', '52', '54'],
+      colors: ['Navy', 'Black', 'Grey'],
+      rating: 4.9,
+      reviews: 45,
+      stockQuantity: 25,
+      inStock: true,
+      isFeatured: true,
+      tags: ['men', 'formal']
+    },
+    {
+      id: '8',
+      name: 'Men\'s Casual Linen Shirt',
+      price: 55.00,
+      category: 'Men',
+      image: 'https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Breathable linen shirt perfect for summer.',
+      sizes: ['S', 'M', 'L', 'XL'],
+      colors: ['White', 'Beige', 'Blue'],
+      rating: 4.5,
+      reviews: 120,
+      stockQuantity: 80,
+      inStock: true,
+      tags: ['men', 'casual']
+    },
+    {
+      id: '9',
+      name: 'Elegant Evening Gown',
+      price: 280.00,
+      category: 'Women',
+      image: 'https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1566174053879-31528523f8ae?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Stunning floor-length gown for special occasions.',
+      sizes: ['XS', 'S', 'M', 'L'],
+      colors: ['Red', 'Black', 'Emerald'],
+      rating: 4.8,
+      reviews: 67,
+      stockQuantity: 15,
+      inStock: true,
+      isFeatured: true,
+      tags: ['women', 'formal']
+    },
+    {
+      id: '10',
+      name: 'Women\'s Summer Dress',
+      price: 89.00,
+      category: 'Women',
+      image: 'https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1572804013309-59a88b7e92f1?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Light and airy floral dress.',
+      sizes: ['S', 'M', 'L'],
+      colors: ['Floral', 'White'],
+      rating: 4.6,
+      reviews: 230,
+      stockQuantity: 60,
+      inStock: true,
+      tags: ['women', 'casual']
+    },
+    {
+      id: '11',
+      name: 'Kids Denim Jacket',
+      price: 45.00,
+      category: 'Kids',
+      image: 'https://images.unsplash.com/photo-1519457431-44ccd64a579b?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1519457431-44ccd64a579b?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Durable and stylish denim jacket for kids.',
+      sizes: ['4Y', '6Y', '8Y', '10Y'],
+      colors: ['Blue'],
+      rating: 4.7,
+      reviews: 88,
+      stockQuantity: 40,
+      inStock: true,
+      tags: ['kids', 'casual']
+    },
+    {
+      id: '12',
+      name: 'Kids Cotton T-Shirt Set',
+      price: 35.00,
+      category: 'Kids',
+      image: 'https://images.unsplash.com/photo-1519238263496-63f82a0359d5?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1519238263496-63f82a0359d5?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Pack of 3 soft cotton t-shirts.',
+      sizes: ['2Y', '4Y', '6Y'],
+      colors: ['Multi'],
+      rating: 4.8,
+      reviews: 150,
+      stockQuantity: 100,
+      inStock: true,
+      isFeatured: true,
+      tags: ['kids', 'casual']
+    },
+    {
+      id: '13',
+      name: 'Luxury Table Lamp',
+      price: 120.00,
+      category: 'Wallpaper',
+      image: 'https://images.unsplash.com/photo-1507473888900-52e1adad5474?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1507473888900-52e1adad5474?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Modern brass table lamp with linen shade.',
+      rating: 4.9,
+      reviews: 42,
+      stockQuantity: 20,
+      inStock: true,
+      tags: ['home', 'lighting']
+    },
+    {
+      id: '14',
+      name: 'Velvet Accent Chair',
+      price: 299.00,
+      originalPrice: 350.00,
+      category: 'Wallpaper',
+      image: 'https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop',
+      images: ['https://images.unsplash.com/photo-1586023492125-27b2c045efd7?q=80&w=1000&auto=format&fit=crop'],
+      description: 'Plush velvet chair for living room or bedroom.',
+      colors: ['Green', 'Blue', 'Pink'],
+      rating: 4.7,
+      reviews: 28,
+      stockQuantity: 10,
+      inStock: true,
+      isFeatured: true,
+      tags: ['home', 'furniture']
+    }
+  ];
+
+  // Duplicate products to create enough data for pagination (aiming for > 16 items)
+  const extendedProducts = [...baseProducts];
+  
+  // Create variations
+  baseProducts.forEach((p, index) => {
+    extendedProducts.push({
+      ...p,
+      id: `copy-${index}`,
+      name: `${p.name} (Variation)`,
+      price: Math.floor(p.price * 0.9),
+      isFeatured: false,
+      isNew: false
+    });
+  });
+
+  return extendedProducts;
+};
+
+export const products: Product[] = generateProducts();
