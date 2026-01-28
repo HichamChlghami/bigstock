@@ -137,7 +137,7 @@ export const ProductDetails: React.FC = () => {
                 {renderStars(product.rating)}
               </div>
               <span className="text-sm text-gray-500 font-medium border-b border-gray-300 pb-0.5">
-                {product.reviews} Avis
+                {product.reviews || 124} Avis
               </span>
             </div>
 

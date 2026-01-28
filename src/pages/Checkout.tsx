@@ -11,7 +11,7 @@ export const Checkout: React.FC = () => {
   const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false); // Flag to prevent redirect loop
-  
+
   const [formData, setFormData] = useState({
     fullName: '',
     phone: '',
@@ -38,7 +38,7 @@ export const Checkout: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
+
     const newOrder = {
       id: Date.now().toString(),
       items: cart,
@@ -74,10 +74,10 @@ export const Checkout: React.FC = () => {
           <p className="text-gray-400 text-sm">Complétez votre commande avec le paiement à la livraison</p>
         </div>
       </div>
-      
+
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 max-w-6xl mx-auto">
-          
+
           {/* LEFT COLUMN: FORM */}
           <div className="lg:col-span-7">
             <div className="bg-white p-8 rounded-xl shadow-sm border border-gray-200">
@@ -97,27 +97,27 @@ export const Checkout: React.FC = () => {
                     <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                       <User size={14} className="text-gray-400" /> Nom Complet
                     </label>
-                    <input 
+                    <input
                       required
                       name="fullName"
                       value={formData.fullName}
                       onChange={handleChange}
-                      type="text" 
+                      type="text"
                       className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
                       placeholder="Jean Dupont"
                     />
                   </div>
-                  
+
                   <div className="space-y-2">
                     <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                       <Phone size={14} className="text-gray-400" /> Téléphone
                     </label>
-                    <input 
+                    <input
                       required
                       name="phone"
                       value={formData.phone}
                       onChange={handleChange}
-                      type="tel" 
+                      type="tel"
                       className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
                       placeholder="+212 600-000000"
                     />
@@ -128,12 +128,12 @@ export const Checkout: React.FC = () => {
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <MapPin size={14} className="text-gray-400" /> Adresse
                   </label>
-                  <input 
+                  <input
                     required
                     name="address"
                     value={formData.address}
                     onChange={handleChange}
-                    type="text" 
+                    type="text"
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
                     placeholder="123 Avenue de la Mode, Apt 4B"
                   />
@@ -143,12 +143,12 @@ export const Checkout: React.FC = () => {
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <MapPin size={14} className="text-gray-400" /> Ville
                   </label>
-                  <input 
+                  <input
                     required
                     name="city"
                     value={formData.city}
                     onChange={handleChange}
-                    type="text" 
+                    type="text"
                     className="w-full px-4 py-3 rounded-lg border border-gray-200 bg-gray-50 focus:bg-white focus:border-accent focus:ring-1 focus:ring-accent outline-none transition-all"
                     placeholder="Casablanca"
                   />
@@ -158,7 +158,7 @@ export const Checkout: React.FC = () => {
                   <label className="text-sm font-medium text-gray-700 flex items-center gap-2">
                     <FileText size={14} className="text-gray-400" /> Notes (Optionnel)
                   </label>
-                  <textarea 
+                  <textarea
                     name="notes"
                     value={formData.notes}
                     onChange={handleChange}
@@ -175,7 +175,7 @@ export const Checkout: React.FC = () => {
           <div className="lg:col-span-5">
             <div className="bg-white p-8 rounded-xl shadow-lg border border-gray-100 sticky top-24">
               <h2 className="text-xl font-bold mb-6 pb-4 border-b border-gray-100">Récapitulatif</h2>
-              
+
               <div className="space-y-4 mb-8 max-h-[300px] overflow-y-auto pr-2 custom-scrollbar">
                 {cart.map((item) => (
                   <div key={`${item.id}-${item.selectedSize}-${item.selectedColor}`} className="flex gap-4 group">
@@ -185,7 +185,7 @@ export const Checkout: React.FC = () => {
                     <div className="flex-1 min-w-0">
                       <h4 className="text-sm font-medium text-primary truncate">{item.name}</h4>
                       <p className="text-xs text-gray-500 mt-1">
-                        Qté: {item.quantity} 
+                        Qté: {item.quantity}
                         {item.selectedSize && <span className="mx-1">•</span>}
                         {item.selectedSize && `Taille: ${item.selectedSize}`}
                       </p>
@@ -194,7 +194,7 @@ export const Checkout: React.FC = () => {
                   </div>
                 ))}
               </div>
-              
+
               <div className="space-y-3 pt-4 border-t border-gray-100 bg-gray-50/50 -mx-8 px-8 pb-6 mb-6">
                 <div className="flex justify-between text-sm pt-4">
                   <span className="text-gray-600">Sous-total</span>
@@ -210,13 +210,13 @@ export const Checkout: React.FC = () => {
                 </div>
               </div>
 
-              <Button 
-                type="submit" 
+              <Button
+                type="submit"
                 form="checkout-form"
-                fullWidth 
-                size="lg" 
+                fullWidth
+                size="lg"
                 disabled={isSubmitting}
-                className="text-lg font-bold py-4 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2"
+                className="text-base sm:text-lg font-bold py-4 shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center justify-center gap-2 whitespace-nowrap"
               >
                 {isSubmitting ? (
                   <>
