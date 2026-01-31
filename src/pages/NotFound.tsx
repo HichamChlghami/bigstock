@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Button } from '../components/ui/Button';
 import { Home, Search } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -16,7 +18,7 @@ export const NotFound: React.FC = () => {
           <h1 className="text-9xl font-serif font-bold text-gray-200 mb-4 select-none">
             404
           </h1>
-          
+
           <div className="-mt-12 relative z-10">
             <h2 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-4">
               Page Non Trouvée
@@ -26,12 +28,12 @@ export const NotFound: React.FC = () => {
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link to="/">
+              <Link href="/">
                 <Button size="lg" className="w-full sm:w-auto flex items-center justify-center gap-2 shadow-lg">
                   <Home size={18} /> Retour à l'accueil
                 </Button>
               </Link>
-              <Link to="/shop">
+              <Link href="/shop">
                 <Button variant="outline" size="lg" className="w-full sm:w-auto flex items-center justify-center gap-2">
                   <Search size={18} /> Voir la boutique
                 </Button>

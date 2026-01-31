@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { CartItem, Product } from '../types';
 
@@ -40,7 +42,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCart(prev => {
       const existing = prev.find(item => item.id === product.id && item.selectedSize === size && item.selectedColor === color);
       if (existing) {
-        return prev.map(item => 
+        return prev.map(item =>
           (item.id === product.id && item.selectedSize === size && item.selectedColor === color)
             ? { ...item, quantity: item.quantity + quantity }
             : item
@@ -48,7 +50,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       return [...prev, { ...product, quantity, selectedSize: size, selectedColor: color }];
     });
-    
+
     if (!preventDrawer) {
       setIsCartOpen(true);
     }
@@ -74,7 +76,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   return (
     <CartContext.Provider value={{
-      cart, addToCart, removeFromCart, updateQuantity, clearCart, 
+      cart, addToCart, removeFromCart, updateQuantity, clearCart,
       cartTotal, cartCount, isCartOpen, setIsCartOpen,
       wishlist, toggleWishlist
     }}>

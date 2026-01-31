@@ -1,5 +1,8 @@
+'use client';
+
 import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { useAuth } from '../../context/AuthContext';
 import { Button } from '../../components/ui/Button';
 import { Lock, Eye, EyeOff, Home, Loader2 } from 'lucide-react';
@@ -12,17 +15,17 @@ export const AdminLogin: React.FC = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { login } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     setIsLoading(true);
-    
+
     try {
       const success = await login(email, password, rememberMe);
       if (success) {
-        navigate('/admin');
+        router.push('/admin');
       } else {
         setError('Identifiants invalides.');
       }
@@ -35,7 +38,7 @@ export const AdminLogin: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4 relative">
-      <Link to="/" className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-primary transition-colors font-medium">
+      <Link href="/" className="absolute top-6 left-6 flex items-center gap-2 text-gray-600 hover:text-primary transition-colors font-medium">
         <Home size={20} /> Retour au Site
       </Link>
 
@@ -101,7 +104,7 @@ export const AdminLogin: React.FC = () => {
           </div>
 
           <Button fullWidth type="submit" className="flex items-center justify-center gap-2" disabled={isLoading}>
-            {isLoading ? <Loader2 className="animate-spin" size={16} /> : <Lock size={16} />} 
+            {isLoading ? <Loader2 className="animate-spin" size={16} /> : <Lock size={16} />}
             {isLoading ? 'Vérification...' : 'Connexion'}
           </Button>
         </form>

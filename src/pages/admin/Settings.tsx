@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useData } from '../../context/DataContext';
@@ -7,21 +9,21 @@ import { Save, Database, CheckCircle, AlertCircle, BarChart3, Plus, Trash2, Edit
 export const Settings: React.FC = () => {
   const { adminEmail, updateCredentials } = useAuth();
   const { seedDatabase, isLoading: isDataLoading } = useData();
-  
+
   const [email, setEmail] = useState(adminEmail);
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
   const [seedStatus, setSeedStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isSavingCreds, setIsSavingCreds] = useState(false);
-  
+
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   const [gaId, setGaId] = useState('');
-  
+
   // Multi-pixel states
   const [pixelIds, setPixelIds] = useState<string[]>([]);
   const [tiktokIds, setTiktokIds] = useState<string[]>([]);
-  
+
   // Temp inputs for adding new IDs
   const [newPixelId, setNewPixelId] = useState('');
   const [newTiktokId, setNewTiktokId] = useState('');
@@ -35,7 +37,7 @@ export const Settings: React.FC = () => {
 
   useEffect(() => {
     setGaId(localStorage.getItem('ga_id') || '');
-    
+
     // Load Meta Pixels
     try {
       const savedPixels = JSON.parse(localStorage.getItem('pixel_ids') || '[]');
@@ -131,7 +133,7 @@ export const Settings: React.FC = () => {
 
   const saveEdit = () => {
     if (!editingItem) return;
-    
+
     if (editingItem.type === 'pixel') {
       const newIds = [...pixelIds];
       newIds[editingItem.index] = editingItem.value;
@@ -172,7 +174,7 @@ export const Settings: React.FC = () => {
       )}
 
       <div className="space-y-8">
-        
+
         {/* Analytics Section */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
@@ -181,7 +183,7 @@ export const Settings: React.FC = () => {
           <p className="text-gray-600 text-sm mb-6">
             Gérez vos pixels de suivi ici. Vous pouvez ajouter, modifier ou supprimer plusieurs pixels pour Meta et TikTok.
           </p>
-          
+
           <form onSubmit={handleAnalyticsSave} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Google Analytics 4 (ID de mesure)</label>
@@ -202,10 +204,10 @@ export const Settings: React.FC = () => {
                   <div key={index} className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-md border border-gray-200">
                     {editingItem?.type === 'pixel' && editingItem.index === index ? (
                       <div className="flex items-center gap-2 w-full">
-                        <input 
-                          type="text" 
-                          value={editingItem.value} 
-                          onChange={(e) => setEditingItem({...editingItem, value: e.target.value})}
+                        <input
+                          type="text"
+                          value={editingItem.value}
+                          onChange={(e) => setEditingItem({ ...editingItem, value: e.target.value })}
                           className="flex-1 px-2 py-1 text-sm border border-accent rounded outline-none"
                         />
                         <button type="button" onClick={saveEdit} className="text-green-600"><Check size={16} /></button>
@@ -249,10 +251,10 @@ export const Settings: React.FC = () => {
                   <div key={index} className="flex items-center justify-between bg-gray-50 px-3 py-2 rounded-md border border-gray-200">
                     {editingItem?.type === 'tiktok' && editingItem.index === index ? (
                       <div className="flex items-center gap-2 w-full">
-                        <input 
-                          type="text" 
-                          value={editingItem.value} 
-                          onChange={(e) => setEditingItem({...editingItem, value: e.target.value})}
+                        <input
+                          type="text"
+                          value={editingItem.value}
+                          onChange={(e) => setEditingItem({ ...editingItem, value: e.target.value })}
                           className="flex-1 px-2 py-1 text-sm border border-accent rounded outline-none"
                         />
                         <button type="button" onClick={saveEdit} className="text-green-600"><Check size={16} /></button>
@@ -302,7 +304,7 @@ export const Settings: React.FC = () => {
           <p className="text-gray-600 text-sm mb-6">
             Ces identifiants seront mis à jour pour tous les appareils.
           </p>
-          
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">Nouvelle Adresse Email</label>
@@ -337,7 +339,7 @@ export const Settings: React.FC = () => {
           <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
             <Database size={20} className="text-accent" /> Gestion de la Base de Données
           </h2>
-          
+
           <p className="text-gray-600 text-sm mb-6">
             Si votre boutique est vide, vous pouvez la remplir avec les produits de démonstration initiaux.
           </p>
@@ -347,16 +349,16 @@ export const Settings: React.FC = () => {
               <CheckCircle size={16} /> Base de données remplie avec succès !
             </div>
           )}
-          
+
           {seedStatus === 'error' && (
             <div className="bg-red-50 text-red-600 text-sm p-3 rounded-md mb-4 border border-red-100 flex items-center gap-2">
               <AlertCircle size={16} /> Échec du remplissage de la base de données.
             </div>
           )}
 
-          <Button 
-            onClick={handleSeed} 
-            variant="outline" 
+          <Button
+            onClick={handleSeed}
+            variant="outline"
             className="flex items-center gap-2"
             disabled={isDataLoading}
           >

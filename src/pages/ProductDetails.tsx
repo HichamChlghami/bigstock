@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useRouter } from 'next/navigation';
 import { useData } from '../context/DataContext';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/Button';
@@ -9,17 +11,17 @@ import { slugify } from '../utils/slugify';
 
 export const ProductDetails: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { products, isLoading } = useData();
   const { addToCart, toggleWishlist, wishlist } = useCart();
-  
+
   // Find product by slug or fallback to checking slugified name
   const product = products.find(p => (p.slug === slug) || (slugify(p.name) === slug));
-  
+
   const [selectedSize, setSelectedSize] = useState<string | undefined>();
   const [selectedColor, setSelectedColor] = useState<string | undefined>();
   const [activeImage, setActiveImage] = useState(0);
-  
+
   useEffect(() => {
     if (product) {
       setSelectedSize(product.sizes?.[0]);
@@ -27,7 +29,7 @@ export const ProductDetails: React.FC = () => {
       setActiveImage(0);
     }
   }, [product]);
-  
+
   const quantity = 1;
 
   // LOADING STATE: Critical for Vercel/Production to prevent "Not Found" flash
@@ -49,7 +51,7 @@ export const ProductDetails: React.FC = () => {
         <p className="text-gray-500 mb-8 max-w-md">
           Le produit que vous cherchez n'existe pas ou a été déplacé.
         </p>
-        <Button onClick={() => navigate('/shop')}>
+        <Button onClick={() => router.push('/shop')}>
           Retour à la boutique
         </Button>
       </div>
@@ -58,18 +60,18 @@ export const ProductDetails: React.FC = () => {
 
   const relatedProducts = products
     .filter(p => {
-        const hasSharedCategory = p.categories?.some(c => product.categories?.includes(c));
-        return hasSharedCategory && p.id !== product.id;
+      const hasSharedCategory = p.categories?.some(c => product.categories?.includes(c));
+      return hasSharedCategory && p.id !== product.id;
     })
     .slice(0, 4);
 
-  const finalRelatedProducts = relatedProducts.length > 0 
-    ? relatedProducts 
+  const finalRelatedProducts = relatedProducts.length > 0
+    ? relatedProducts
     : products.filter(p => p.id !== product.id).slice(0, 4);
 
   const handleOrderNow = () => {
     addToCart(product, quantity, selectedSize, selectedColor, true);
-    navigate('/checkout');
+    router.push('/checkout');
   };
 
   const handleAddToCart = () => {
@@ -78,10 +80,10 @@ export const ProductDetails: React.FC = () => {
 
   const renderStars = (rating: number) => {
     return [...Array(5)].map((_, i) => (
-      <Star 
-        key={i} 
-        size={16} 
-        className={`${i < Math.floor(rating) ? 'text-accent fill-accent' : 'text-gray-300'}`} 
+      <Star
+        key={i}
+        size={16}
+        className={`${i < Math.floor(rating) ? 'text-accent fill-accent' : 'text-gray-300'}`}
       />
     ));
   };
@@ -92,13 +94,13 @@ export const ProductDetails: React.FC = () => {
     <div className="bg-white">
       <div className="container pt-8 pb-5">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-0">
-          
+
           {/* LEFT: IMAGES */}
           <div className="space-y-4">
             <div className="w-full relative bg-white border border-gray-100 rounded-lg overflow-hidden flex justify-center items-center p-4">
-              <img 
-                src={product.images[activeImage] || product.image} 
-                alt={product.name} 
+              <img
+                src={product.images[activeImage] || product.image}
+                alt={product.name}
                 className="w-full h-auto max-h-[600px] object-contain"
               />
             </div>
@@ -106,7 +108,7 @@ export const ProductDetails: React.FC = () => {
             {product.images.length > 0 && (
               <div className="flex flex-wrap gap-3 justify-center md:justify-start">
                 {product.images.slice(0, 4).map((img, idx) => (
-                  <button 
+                  <button
                     key={idx}
                     onClick={() => setActiveImage(idx)}
                     className={`w-[80px] h-[80px] rounded-md overflow-hidden border-2 transition-all flex-shrink-0 bg-white p-1 ${activeImage === idx ? 'border-accent opacity-100' : 'border-gray-100 opacity-70 hover:opacity-100'}`}
@@ -120,11 +122,11 @@ export const ProductDetails: React.FC = () => {
 
           {/* RIGHT: INFO */}
           <div className="flex flex-col justify-start items-start text-left pt-0">
-            
+
             <h1 className="text-3xl md:text-4xl font-serif font-bold text-primary mb-2 leading-tight">
               {product.name}
             </h1>
-            
+
             <div className="flex items-center gap-4 mb-3">
               <span className="text-2xl md:text-3xl font-bold text-accent">{product.price.toFixed(2)} MAD</span>
               {product.originalPrice && (
@@ -177,8 +179,8 @@ export const ProductDetails: React.FC = () => {
                         key={size}
                         onClick={() => setSelectedSize(size)}
                         className={`min-w-[3.5rem] h-12 px-4 rounded-md border flex items-center justify-center text-sm font-medium transition-all
-                          ${selectedSize === size 
-                            ? 'border-accent bg-accent text-white shadow-md' 
+                          ${selectedSize === size
+                            ? 'border-accent bg-accent text-white shadow-md'
                             : 'border-gray-200 hover:border-gray-400 text-gray-700 bg-white'}`}
                       >
                         {size}
@@ -199,11 +201,11 @@ export const ProductDetails: React.FC = () => {
                         onClick={() => setSelectedColor(color)}
                         className={`group relative w-12 h-12 rounded-full border flex items-center justify-center transition-all bg-white
                           ${selectedColor === color ? 'border-accent ring-1 ring-accent ring-offset-2' : 'border-gray-200 hover:border-gray-400'}`}
-                          title={color}
+                        title={color}
                       >
-                        <span 
+                        <span
                           className="w-8 h-8 rounded-full border border-black/5 shadow-sm"
-                          style={{ backgroundColor: color }} 
+                          style={{ backgroundColor: color }}
                         />
                       </button>
                     ))}
@@ -214,25 +216,25 @@ export const ProductDetails: React.FC = () => {
 
             {/* Action Buttons - FIXED FOR MOBILE FIT */}
             <div className="w-full mb-8 flex flex-row gap-2 items-center">
-              <Button 
-                onClick={handleOrderNow} 
-                className="flex-1 text-xs sm:text-sm font-bold py-3 shadow-md hover:shadow-lg transition-all h-12 whitespace-nowrap px-1 sm:px-2" 
+              <Button
+                onClick={handleOrderNow}
+                className="flex-1 text-xs sm:text-sm font-bold py-3 shadow-md hover:shadow-lg transition-all h-12 whitespace-nowrap px-1 sm:px-2"
                 disabled={!product.inStock}
               >
                 {product.inStock ? 'Commander' : 'ÉPUISÉ'}
               </Button>
-              <Button 
+              <Button
                 onClick={handleAddToCart}
                 variant="outline"
-                className="flex-1 text-xs sm:text-sm font-bold py-3 border-2 h-12 whitespace-nowrap px-1 sm:px-2" 
+                className="flex-1 text-xs sm:text-sm font-bold py-3 border-2 h-12 whitespace-nowrap px-1 sm:px-2"
                 disabled={!product.inStock}
               >
-                <ShoppingCart size={16} className="mr-1 hidden sm:inline" /> 
+                <ShoppingCart size={16} className="mr-1 hidden sm:inline" />
                 <span className="inline">Ajouter</span>
               </Button>
-              
+
               {/* Wishlist Button */}
-              <button 
+              <button
                 onClick={() => toggleWishlist(product.id)}
                 className={`h-12 w-12 flex-shrink-0 flex items-center justify-center border-2 rounded-md transition-colors ${isWishlisted ? 'border-red-500 text-red-500 bg-red-50' : 'border-gray-200 text-gray-400 hover:border-red-500 hover:text-red-500'}`}
                 title="Ajouter aux favoris"
@@ -240,7 +242,7 @@ export const ProductDetails: React.FC = () => {
                 <Heart size={20} fill={isWishlisted ? "currentColor" : "none"} />
               </button>
             </div>
-            
+
             <p className="text-xs text-gray-500 -mt-4 text-center w-full font-medium">
               Payez à la réception de votre commande
             </p>
@@ -281,7 +283,7 @@ export const ProductDetails: React.FC = () => {
         {product.description && (
           <div className="w-full md:w-[80%] mx-auto mb-12">
             <div className="border-b border-gray-200 mb-8 text-center">
-               <h3 className="text-xl font-serif font-bold text-primary inline-block border-b-2 border-accent pb-3 px-4">Description du Produit</h3>
+              <h3 className="text-xl font-serif font-bold text-primary inline-block border-b-2 border-accent pb-3 px-4">Description du Produit</h3>
             </div>
             <div className="bg-white p-6 md:p-8 rounded-xl shadow-sm border border-gray-100 text-gray-600 leading-relaxed text-base whitespace-pre-line">
               {product.description}

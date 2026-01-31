@@ -1,14 +1,17 @@
+'use client';
+
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Send, CheckCircle } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { motion, AnimatePresence } from 'framer-motion';
+import { submitToGoogleSheets } from '../utils/googleSheets';
 
 export const About: React.FC = () => (
   <div className="container py-20 max-w-4xl">
     <h1 className="text-4xl font-serif font-bold mb-8 text-center">À Propos de BigStock</h1>
     <div className="prose prose-lg mx-auto text-gray-600">
       <p className="mb-6">
-        Fondé en 2025, BigStock est né du désir d'apporter des produits de mode et de lifestyle de qualité supérieure au client exigeant. Nous croyons que le vrai luxe réside dans les détails—la couture d'une chaussure en cuir, la texture d'un papier peint, la coupe d'une veste.
+        Fondé en 2026, BigStock est né du désir d'apporter des produits de mode et de lifestyle de qualité supérieure au client exigeant. Nous croyons que le vrai luxe réside dans les détails—la couture d'une chaussure en cuir, la texture d'un papier peint, la coupe d'une veste.
       </p>
       <p className="mb-6">
         Notre mission est simple : curer une collection qui incarne l'élégance, la durabilité et le style intemporel. Nous travaillons directement avec des artisans et des fabricants pour nous assurer que chaque produit répond à nos normes rigoureuses.
@@ -24,20 +27,49 @@ export const About: React.FC = () => (
   </div>
 );
 
+
+
 export const Contact: React.FC = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [formData, setFormData] = useState({
+    firstName: '',
+    lastName: '',
+    phone: '',
+    subject: 'general',
+    message: ''
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    setTimeout(() => {
+
+    try {
+      // Send to Google Sheets
+      await submitToGoogleSheets('contact', {
+        ...formData,
+        fullName: `${formData.firstName} ${formData.lastName}`
+      });
+
       setIsSubmitting(false);
       setIsSuccess(true);
-      // Reset success message after 5 seconds if needed, or keep it
-    }, 1500);
+      // Reset form
+      setFormData({
+        firstName: '',
+        lastName: '',
+        phone: '',
+        subject: 'general',
+        message: ''
+      });
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setIsSubmitting(false);
+      alert("Une erreur est survenue. Veuillez réessayer.");
+    }
   };
 
   return (
@@ -54,7 +86,7 @@ export const Contact: React.FC = () => {
 
       <div className="container py-20">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          
+
           <div className="space-y-12">
             <div>
               <h2 className="text-3xl font-serif font-bold text-primary mb-6 relative inline-block">
@@ -102,23 +134,23 @@ export const Contact: React.FC = () => {
             </div>
 
             <div className="mt-12 rounded-xl overflow-hidden shadow-lg border border-gray-100 h-64 relative bg-gray-100 group">
-               <img 
-                 src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1000&auto=format&fit=crop" 
-                 alt="Carte" 
-                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500" 
-               />
-               <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-                  <Button variant="secondary" size="sm" className="shadow-xl">Voir sur Google Maps</Button>
-               </div>
+              <img
+                src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=1000&auto=format&fit=crop"
+                alt="Carte"
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+              />
+              <div className="absolute inset-0 flex items-center justify-center bg-black/10">
+                <Button variant="secondary" size="sm" className="shadow-xl">Voir sur Google Maps</Button>
+              </div>
             </div>
           </div>
 
           <div className="bg-white p-8 md:p-12 rounded-xl shadow-2xl border border-gray-100 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-primary to-accent"></div>
-            
+
             <AnimatePresence mode="wait">
               {isSuccess ? (
-                <motion.div 
+                <motion.div
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: -20 }}
@@ -143,28 +175,32 @@ export const Contact: React.FC = () => {
                 >
                   <h2 className="text-3xl font-serif font-bold text-primary mb-2">Envoyer un Message</h2>
                   <p className="text-gray-500 mb-8">Remplissez le formulaire ci-dessous et nous vous répondrons rapidement.</p>
-                  
+
                   <form onSubmit={handleSubmit} className="space-y-8">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                       <div className="relative group">
-                        <input 
-                          type="text" 
-                          id="firstName" 
+                        <input
+                          type="text"
+                          id="firstName"
                           required
-                          className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors bg-transparent" 
-                          placeholder="Prénom" 
+                          value={formData.firstName}
+                          onChange={handleChange}
+                          className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors bg-transparent"
+                          placeholder="Prénom"
                         />
                         <label htmlFor="firstName" className="absolute left-0 -top-3.5 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-accent">
                           Prénom
                         </label>
                       </div>
                       <div className="relative group">
-                        <input 
-                          type="text" 
-                          id="lastName" 
+                        <input
+                          type="text"
+                          id="lastName"
                           required
-                          className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors bg-transparent" 
-                          placeholder="Nom" 
+                          value={formData.lastName}
+                          onChange={handleChange}
+                          className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors bg-transparent"
+                          placeholder="Nom"
                         />
                         <label htmlFor="lastName" className="absolute left-0 -top-3.5 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-accent">
                           Nom
@@ -173,22 +209,25 @@ export const Contact: React.FC = () => {
                     </div>
 
                     <div className="relative group">
-                      <input 
-                        type="email" 
-                        id="email" 
+                      <input
+                        type="tel"
+                        id="phone"
                         required
-                        className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors bg-transparent" 
-                        placeholder="Adresse Email" 
+                        value={formData.phone}
+                        onChange={handleChange}
+                        className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors bg-transparent"
+                        placeholder="Téléphone"
                       />
-                      <label htmlFor="email" className="absolute left-0 -top-3.5 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-accent">
-                        Adresse Email
+                      <label htmlFor="phone" className="absolute left-0 -top-3.5 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-accent">
+                        Téléphone
                       </label>
                     </div>
 
                     <div className="relative group">
-                      <select 
-                        id="subject" 
-                        defaultValue=""
+                      <select
+                        id="subject"
+                        value={formData.subject}
+                        onChange={handleChange}
                         className="peer w-full border-b-2 border-gray-200 py-3 bg-transparent focus:border-accent focus:outline-none transition-colors text-gray-700 cursor-pointer"
                       >
                         <option value="" disabled>Sélectionnez un sujet</option>
@@ -200,11 +239,13 @@ export const Contact: React.FC = () => {
                     </div>
 
                     <div className="relative group">
-                      <textarea 
-                        id="message" 
-                        rows={4} 
+                      <textarea
+                        id="message"
+                        rows={4}
                         required
-                        className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors resize-none bg-transparent" 
+                        value={formData.message}
+                        onChange={handleChange}
+                        className="peer w-full border-b-2 border-gray-200 py-3 placeholder-transparent focus:border-accent focus:outline-none transition-colors resize-none bg-transparent"
                         placeholder="Message"
                       ></textarea>
                       <label htmlFor="message" className="absolute left-0 -top-3.5 text-sm text-gray-500 transition-all peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-3.5 peer-focus:text-sm peer-focus:text-accent">
@@ -212,9 +253,9 @@ export const Contact: React.FC = () => {
                       </label>
                     </div>
 
-                    <Button 
-                      size="lg" 
-                      fullWidth 
+                    <Button
+                      size="lg"
+                      fullWidth
                       type="submit"
                       disabled={isSubmitting}
                       className="mt-6 flex items-center justify-center gap-3 py-4 text-lg"

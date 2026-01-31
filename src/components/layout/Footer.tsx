@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Phone, Mail, MapPin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
@@ -9,11 +8,11 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand */}
           <div>
-            <Link to="/" className="inline-block mb-6">
-              <img 
-                src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png" 
-                alt="BigStock" 
-                className="h-12 w-auto object-contain" 
+            <Link href="/" className="inline-block mb-6">
+              <img
+                src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png"
+                alt="BigStock"
+                className="h-12 w-auto object-contain"
               />
             </Link>
             <p className="text-gray-400 text-sm leading-relaxed mb-6">
@@ -30,10 +29,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-6 text-accent">Boutique</h4>
             <ul className="space-y-3 text-sm text-gray-400">
-              <li><Link to="/shop" className="hover:text-white transition-colors">Tous les produits</Link></li>
-              <li><Link to="/category/Chaussures" className="hover:text-white transition-colors">Chaussures</Link></li>
-              <li><Link to="/category/Vestes" className="hover:text-white transition-colors">Vestes</Link></li>
-              <li><Link to="/category/Papier Peint" className="hover:text-white transition-colors">Papier Peint</Link></li>
+              <li><Link href="/shop" className="hover:text-white transition-colors">Tous les produits</Link></li>
+              <li><Link href="/category/Chaussures" className="hover:text-white transition-colors">Chaussures</Link></li>
+              <li><Link href="/category/Vestes" className="hover:text-white transition-colors">Vestes</Link></li>
+              <li><Link href="/category/Papier Peint" className="hover:text-white transition-colors">Papier Peint</Link></li>
             </ul>
           </div>
 
@@ -41,10 +40,10 @@ export const Footer: React.FC = () => {
           <div>
             <h4 className="text-lg font-semibold mb-6 text-accent">Aide</h4>
             <ul className="space-y-3 text-sm text-gray-400">
-              <li><Link to="/contact" className="hover:text-white transition-colors">Contactez-nous</Link></li>
-              <li><Link to="/shipping" className="hover:text-white transition-colors">Livraison</Link></li>
-              <li><Link to="/returns" className="hover:text-white transition-colors">Retours & Échanges</Link></li>
-              <li><Link to="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
+              <li><Link href="/contact" className="hover:text-white transition-colors">Contactez-nous</Link></li>
+              <li><Link href="/shipping" className="hover:text-white transition-colors">Livraison</Link></li>
+              <li><Link href="/returns" className="hover:text-white transition-colors">Retours & Échanges</Link></li>
+              <li><Link href="/faq" className="hover:text-white transition-colors">FAQ</Link></li>
             </ul>
           </div>
 
@@ -69,10 +68,10 @@ export const Footer: React.FC = () => {
         </div>
 
         <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
-          <p>&copy; 2025 BigStock. Tous droits réservés.</p>
+          <p>&copy; 2026 BigStock. Tous droits réservés.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link to="/privacy" className="hover:text-gray-300">Politique de confidentialité</Link>
-            <Link to="/terms" className="hover:text-gray-300">Conditions d'utilisation</Link>
+            <Link href="/privacy" className="hover:text-gray-300">Politique de confidentialité</Link>
+            <Link href="/terms" className="hover:text-gray-300">Conditions d'utilisation</Link>
           </div>
         </div>
       </div>

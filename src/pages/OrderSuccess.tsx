@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { CheckCircle, ArrowRight, Home, Package } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { motion } from 'framer-motion';
@@ -11,14 +13,14 @@ export const OrderSuccess: React.FC = () => {
     const orderId = `ORD-${Date.now()}`;
     const value = 150.00; // Average order value or pass actual value via location state if needed
     analytics.trackPurchase(orderId, value, 'MAD');
-    
+
     // Scroll to top
     window.scrollTo(0, 0);
   }, []);
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <motion.div 
+      <motion.div
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
@@ -26,16 +28,16 @@ export const OrderSuccess: React.FC = () => {
       >
         {/* Top Accent Line */}
         <div className="h-2 bg-gradient-to-r from-primary via-accent to-primary" />
-        
+
         <div className="p-8 md:p-12 text-center">
           {/* Animated Checkmark */}
-          <motion.div 
+          <motion.div
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
             className="w-24 h-24 bg-green-50 rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm relative"
           >
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.5 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: 0.4, duration: 0.3 }}
@@ -48,7 +50,7 @@ export const OrderSuccess: React.FC = () => {
           <h1 className="text-2xl md:text-3xl font-serif font-bold text-primary mb-3 leading-tight">
             🎉 Votre demande a été reçue avec succès
           </h1>
-          
+
           <h2 className="text-lg font-medium text-accent mb-6 font-sans">
             Merci pour votre confiance
           </h2>
@@ -79,13 +81,13 @@ export const OrderSuccess: React.FC = () => {
 
           {/* Actions */}
           <div className="space-y-3">
-            <Link to="/shop" className="block">
+            <Link href="/shop" className="block">
               <Button fullWidth size="lg" className="py-4 text-base shadow-lg hover:shadow-xl transition-all group bg-primary hover:bg-gray-800">
                 Continuer vos achats <ArrowRight size={18} className="ml-2 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            
-            <Link to="/" className="block">
+
+            <Link href="/" className="block">
               <Button variant="ghost" fullWidth className="text-gray-500 hover:text-primary hover:bg-gray-50">
                 <Home size={18} className="mr-2" /> Retour à l'accueil
               </Button>

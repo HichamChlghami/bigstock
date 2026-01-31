@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { X, Minus, Plus, Trash2 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { Button } from '../ui/Button';
@@ -7,26 +9,26 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const CartDrawer: React.FC = () => {
   const { cart, isCartOpen, setIsCartOpen, removeFromCart, updateQuantity, cartTotal } = useCart();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleCheckout = () => {
     setIsCartOpen(false);
-    navigate('/checkout');
+    router.push('/checkout');
   };
 
   return (
     <AnimatePresence>
       {isCartOpen && (
         <>
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={() => setIsCartOpen(false)}
             className="fixed inset-0 bg-black/50 z-50 backdrop-blur-sm"
           />
-          
-          <motion.div 
+
+          <motion.div
             initial={{ x: '100%' }}
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
@@ -35,7 +37,7 @@ export const CartDrawer: React.FC = () => {
           >
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <h2 className="text-xl font-serif font-bold text-primary">Panier ({cart.length})</h2>
-              <button 
+              <button
                 onClick={() => setIsCartOpen(false)}
                 className="text-gray-400 hover:text-primary transition-colors"
               >
@@ -60,14 +62,14 @@ export const CartDrawer: React.FC = () => {
                       <div>
                         <h3 className="text-sm font-medium text-primary line-clamp-1">{item.name}</h3>
                         <p className="text-xs text-gray-500 mt-1">
-                          {item.selectedSize && `Taille: ${item.selectedSize}`} 
+                          {item.selectedSize && `Taille: ${item.selectedSize}`}
                           {item.selectedSize && item.selectedColor && ' | '}
                           {item.selectedColor && `Couleur: ${item.selectedColor}`}
                         </p>
                       </div>
                       <div className="flex items-center justify-between mt-2">
                         <div className="flex items-center border border-gray-200 rounded-md">
-                          <button 
+                          <button
                             onClick={() => updateQuantity(item.id, item.quantity - 1)}
                             className="p-1 hover:bg-gray-50 text-gray-500"
                             disabled={item.quantity <= 1}
@@ -75,7 +77,7 @@ export const CartDrawer: React.FC = () => {
                             <Minus size={14} />
                           </button>
                           <span className="px-2 text-sm font-medium">{item.quantity}</span>
-                          <button 
+                          <button
                             onClick={() => updateQuantity(item.id, item.quantity + 1)}
                             className="p-1 hover:bg-gray-50 text-gray-500"
                           >
@@ -84,7 +86,7 @@ export const CartDrawer: React.FC = () => {
                         </div>
                         <div className="flex items-center gap-3">
                           <span className="text-sm font-bold text-accent">{(item.price * item.quantity).toFixed(2)} MAD</span>
-                          <button 
+                          <button
                             onClick={() => removeFromCart(item.id)}
                             className="text-gray-400 hover:text-red-500 transition-colors"
                           >

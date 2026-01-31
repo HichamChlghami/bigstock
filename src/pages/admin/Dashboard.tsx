@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { useData } from '../../context/DataContext';
 import { ShoppingBag, DollarSign, Package } from 'lucide-react';
@@ -19,7 +21,7 @@ export const Dashboard: React.FC = () => {
   return (
     <div>
       <h1 className="text-2xl font-bold text-primary mb-8">Vue d'ensemble</h1>
-      
+
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
         {stats.map((stat) => (
           <div key={stat.label} className="bg-white p-6 rounded-lg shadow-sm border border-gray-100">
@@ -49,11 +51,10 @@ export const Dashboard: React.FC = () => {
                   </div>
                   <div className="text-right">
                     <p className="font-bold text-accent">{order.total.toFixed(2)} MAD</p>
-                    <span className={`text-xs px-2 py-1 rounded-full ${
-                      order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 
-                      order.status === 'Cancelled' ? 'bg-red-100 text-red-700' : 
-                      'bg-yellow-100 text-yellow-700'
-                    }`}>
+                    <span className={`text-xs px-2 py-1 rounded-full ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' :
+                        order.status === 'Cancelled' ? 'bg-red-100 text-red-700' :
+                          'bg-yellow-100 text-yellow-700'
+                      }`}>
                       {order.status}
                     </span>
                   </div>

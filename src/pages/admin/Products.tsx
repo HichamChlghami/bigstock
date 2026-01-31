@@ -1,10 +1,12 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { Product } from '../../types';
 import { Button } from '../../components/ui/Button';
 import { Plus, Edit, Trash2, Search, ExternalLink, Copy, Check } from 'lucide-react';
 import { ProductForm } from './ProductForm';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 
 export const Products: React.FC = () => {
   const { products, deleteProduct } = useData();
@@ -20,7 +22,7 @@ export const Products: React.FC = () => {
     const categoryMatch = p.category?.toLowerCase().includes(term);
     // Check new categories array
     const categoriesMatch = p.categories?.some(c => c.toLowerCase().includes(term));
-    
+
     return nameMatch || categoryMatch || categoriesMatch;
   });
 
@@ -64,9 +66,9 @@ export const Products: React.FC = () => {
         <div className="p-4 border-b border-gray-100">
           <div className="relative">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-            <input 
-              type="text" 
-              placeholder="Rechercher des produits..." 
+            <input
+              type="text"
+              placeholder="Rechercher des produits..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-accent"
@@ -107,14 +109,14 @@ export const Products: React.FC = () => {
                         /{product.slug}
                       </span>
                       <div className="flex gap-1">
-                        <button 
+                        <button
                           onClick={() => product.slug && copyToClipboard(product.slug)}
                           className="text-gray-400 hover:text-accent p-1"
                           title="Copier Lien"
                         >
                           {copiedSlug === product.slug ? <Check size={12} className="text-green-500" /> : <Copy size={12} />}
                         </button>
-                        <Link to={`/products/${product.slug}`} target="_blank" className="text-gray-400 hover:text-accent p-1" title="Voir Page">
+                        <Link href={`/products/${product.slug}`} target="_blank" className="text-gray-400 hover:text-accent p-1" title="Voir Page">
                           <ExternalLink size={12} />
                         </Link>
                       </div>

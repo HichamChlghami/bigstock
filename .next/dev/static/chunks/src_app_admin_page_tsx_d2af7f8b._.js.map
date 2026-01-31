@@ -1,0 +1,6 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///C:/Users/chlgh/OneDrive/Desktop/bigstock/src/app/admin/page.tsx"],"sourcesContent":["'use client';\r\n\r\nimport { Dashboard } from \"../../../pages/admin/Dashboard\";\r\n\r\nexport default function Page() {\r\n    return <Dashboard />;\r\n}\r\n"],"names":[],"mappings":";;;;;;;;;;AAAA;;;AAIe,SAAS;IACpB,qBAAO,6LAAC;;;;;AACZ;KAFwB"}}]
+}

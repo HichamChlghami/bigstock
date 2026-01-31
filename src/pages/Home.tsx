@@ -1,7 +1,9 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { 
+import {
   Truck, ShieldCheck, RefreshCw, Lock, Star
 } from 'lucide-react';
 import { useData } from '../context/DataContext';
@@ -11,32 +13,32 @@ import { Button } from '../components/ui/Button';
 
 export const Home: React.FC = () => {
   const { products, isLoading } = useData();
-  
+
   // 1. Featured Products (Produits Phares)
   const featuredProducts = products.filter(p => p.isFeatured).slice(0, 4);
-  
+
   // 2. Best Sellers (Meilleures Ventes)
   const manualBestSellers = products.filter(p => p.isBestSeller);
-  const bestSellers = manualBestSellers.length > 0 
-    ? manualBestSellers.slice(0, 8) 
+  const bestSellers = manualBestSellers.length > 0
+    ? manualBestSellers.slice(0, 8)
     : products.filter(p => p.rating > 4.5).slice(0, 8);
-  
+
   // 3. Wallpaper Products (Papier Peint)
-  const wallpaperProducts = products.filter(p => 
-    p.categories?.some(c => c.toLowerCase().includes('papier peint')) || 
+  const wallpaperProducts = products.filter(p =>
+    p.categories?.some(c => c.toLowerCase().includes('papier peint')) ||
     p.category === 'Wallpaper'
   ).slice(0, 4);
 
   // Demographic Collections
-  const menProducts = products.filter(p => 
+  const menProducts = products.filter(p =>
     p.categories && p.categories.some(c => c.toLowerCase().includes('hommes'))
   ).slice(0, 3);
-  
-  const womenProducts = products.filter(p => 
+
+  const womenProducts = products.filter(p =>
     p.categories && p.categories.some(c => c.toLowerCase().includes('femmes'))
   ).slice(0, 3);
-  
-  const kidsProducts = products.filter(p => 
+
+  const kidsProducts = products.filter(p =>
     p.categories && p.categories.some(c => c.toLowerCase().includes('enfants'))
   ).slice(0, 3);
 
@@ -54,20 +56,20 @@ export const Home: React.FC = () => {
 
   return (
     <div className="bg-gray-50 min-h-screen font-sans">
-      
+
       {/* 1. HERO SECTION */}
       <section className="relative h-[70vh] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img 
-            src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2000&auto=format&fit=crop" 
-            alt="Intérieur Magasin Luxe" 
+          <img
+            src="https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?q=80&w=2000&auto=format&fit=crop"
+            alt="Intérieur Magasin Luxe"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-black/50" />
         </div>
-        
+
         <div className="container relative z-10 px-4 text-center">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -78,7 +80,7 @@ export const Home: React.FC = () => {
             <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto font-light leading-relaxed">
               Découvrez notre sélection premium de vêtements, chaussures et décoration. Conçu pour les connaisseurs modernes.
             </p>
-            <Link to="/shop">
+            <Link href="/shop">
               <Button size="lg" className="bg-accent hover:bg-accent-hover text-white px-10 py-4 text-sm font-bold tracking-widest uppercase shadow-xl">
                 TOUS LES PRODUITS
               </Button>
@@ -128,9 +130,9 @@ export const Home: React.FC = () => {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
-            <Link to="/shop">
+            <Link href="/shop">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white px-8">
                 Voir Tout
               </Button>
@@ -141,7 +143,7 @@ export const Home: React.FC = () => {
 
       {/* 4. COLLECTIONS (Men / Women / Kids) */}
       <div className="space-y-0">
-        
+
         {/* Men */}
         <section className="py-16 bg-gray-100 border-t border-gray-200">
           <div className="container mx-auto px-4">
@@ -152,7 +154,7 @@ export const Home: React.FC = () => {
                 <p className="text-gray-600 mb-8 text-base max-w-xs leading-relaxed">
                   Styles raffinés pour l'homme moderne.
                 </p>
-                <Link to="/category/Hommes">
+                <Link href="/category/Hommes">
                   <Button size="md" className="xl:w-auto shadow-lg">Voir Hommes</Button>
                 </Link>
               </div>
@@ -173,7 +175,7 @@ export const Home: React.FC = () => {
                 <p className="text-gray-600 mb-8 text-base max-w-xs leading-relaxed">
                   Pièces intemporelles conçues pour inspirer.
                 </p>
-                <Link to="/category/Femmes">
+                <Link href="/category/Femmes">
                   <Button size="md" className="xl:w-auto shadow-lg">Voir Femmes</Button>
                 </Link>
               </div>
@@ -194,7 +196,7 @@ export const Home: React.FC = () => {
                 <p className="text-gray-600 mb-8 text-base max-w-xs leading-relaxed">
                   Vêtements confortables et élégants.
                 </p>
-                <Link to="/category/Enfants">
+                <Link href="/category/Enfants">
                   <Button size="md" className="xl:w-auto shadow-lg">Voir Enfants</Button>
                 </Link>
               </div>
@@ -212,7 +214,7 @@ export const Home: React.FC = () => {
           <img src="https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop" alt="" className="w-full h-full object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-transparent to-primary opacity-90"></div>
-        
+
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
@@ -220,11 +222,11 @@ export const Home: React.FC = () => {
             transition={{ duration: 0.8 }}
           >
             <span className="text-accent font-bold tracking-widest text-sm uppercase mb-4 block">Arrivage Récent</span>
-            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6">Nouvelle Collection 2025</h2>
+            <h2 className="text-4xl md:text-6xl font-serif font-bold mb-6">Nouvelle Collection 2026</h2>
             <p className="text-gray-300 text-lg mb-10 max-w-2xl mx-auto font-light">
               Découvrez le futur de la mode. Designs audacieux, matériaux durables et qualité sans compromis.
             </p>
-            <Link to="/shop">
+            <Link href="/shop">
               <Button size="lg" className="px-12 py-4 bg-white text-primary hover:bg-gray-100 border-none shadow-xl">
                 Voir la Collection
               </Button>
@@ -255,9 +257,9 @@ export const Home: React.FC = () => {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="text-center mt-12">
-            <Link to="/category/Papier Peint">
+            <Link href="/category/Papier Peint">
               <Button variant="outline" className="border-primary text-primary hover:bg-primary hover:text-white px-8">
                 Voir Tout Déco
               </Button>
@@ -265,7 +267,7 @@ export const Home: React.FC = () => {
           </div>
         </div>
       </section>
-      
+
       {/* 7. BEST SELLERS */}
       <section className="py-20 bg-gray-50 border-t border-gray-200">
         <div className="container mx-auto px-4">
@@ -306,7 +308,7 @@ export const Home: React.FC = () => {
             <p className="text-gray-400 text-lg mb-10 max-w-2xl mx-auto leading-relaxed font-light">
               Achetez en toute confiance. Payez uniquement lorsque vous recevez votre commande à votre porte. Aucun paiement en ligne requis.
             </p>
-            <Link to="/shop">
+            <Link href="/shop">
               <Button size="lg" className="px-10 py-4 text-base font-bold shadow-xl hover:shadow-accent/20 transition-transform hover:-translate-y-1">
                 Commencer vos achats
               </Button>

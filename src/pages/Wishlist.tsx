@@ -1,5 +1,7 @@
+'use client';
+
 import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Heart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import { useData } from '../context/DataContext';
@@ -42,7 +44,7 @@ export const Wishlist: React.FC = () => {
           <p className="text-gray-500 mb-8 max-w-md mx-auto">
             Enregistrez les articles que vous aimez. Retrouvez-les à tout moment et ajoutez-les facilement au panier.
           </p>
-          <Link to="/shop">
+          <Link href="/shop">
             <Button size="lg">Commencer vos achats</Button>
           </Link>
         </div>

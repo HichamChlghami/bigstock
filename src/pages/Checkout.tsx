@@ -1,14 +1,17 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { useCart } from '../context/CartContext';
 import { useData } from '../context/DataContext';
 import { Button } from '../components/ui/Button';
 import { Truck, ShieldCheck, MapPin, Phone, User, FileText, Loader2 } from 'lucide-react';
+import { submitToGoogleSheets } from '../utils/googleSheets';
 
 export const Checkout: React.FC = () => {
   const { cart, cartTotal, clearCart } = useCart();
   const { addOrder } = useData();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false); // Flag to prevent redirect loop
 
@@ -23,9 +26,9 @@ export const Checkout: React.FC = () => {
   // Redirect if cart is empty (ONLY if not successful)
   useEffect(() => {
     if (cart.length === 0 && !isSuccess) {
-      navigate('/shop');
+      router.push('/shop');
     }
-  }, [cart, navigate, isSuccess]);
+  }, [cart, router, isSuccess]);
 
   if (cart.length === 0 && !isSuccess) {
     return null;
@@ -56,9 +59,26 @@ export const Checkout: React.FC = () => {
 
     try {
       await addOrder(newOrder);
+
+      // Backup to Google Sheets
+      try {
+        await submitToGoogleSheets('order', {
+          orderId: newOrder.id,
+          customerName: newOrder.customer.name,
+          customerPhone: newOrder.customer.phone,
+          customerAddress: `${newOrder.customer.address}, ${newOrder.customer.city}`,
+          total: newOrder.total,
+          items: newOrder.items.map(item => `${item.name} (${item.quantity}x ${item.selectedSize || ''} ${item.selectedColor || ''})`).join(', '),
+          date: newOrder.date
+        });
+      } catch (gsError) {
+        console.error("Google Sheets Backup Error:", gsError);
+        // We don't block the user if backup fails but Supabase succeeded
+      }
+
       setIsSuccess(true); // Mark as success BEFORE clearing cart
       clearCart();
-      navigate('/order-success');
+      router.push('/order-success');
     } catch (error) {
       console.error("Checkout Error:", error);
       alert("Une erreur est survenue lors de la commande. Veuillez vérifier votre connexion et réessayer.");

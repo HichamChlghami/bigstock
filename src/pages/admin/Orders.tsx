@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { useData } from '../../context/DataContext';
 import { OrderStatus } from '../../types';
@@ -20,9 +22,9 @@ export const Orders: React.FC = () => {
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-2xl font-bold text-primary">Gestion des Commandes</h1>
-        <Button 
-          variant="outline" 
-          onClick={() => refreshData()} 
+        <Button
+          variant="outline"
+          onClick={() => refreshData()}
           disabled={isLoading}
           className="flex items-center gap-2"
         >
@@ -58,7 +60,7 @@ export const Orders: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 font-bold text-sm text-accent">{order.total.toFixed(2)} MAD</td>
                     <td className="px-6 py-4">
-                      <select 
+                      <select
                         value={order.status}
                         onChange={(e) => updateOrderStatus(order.id, e.target.value as OrderStatus)}
                         className={`text-xs px-2 py-1 rounded-full border-0 cursor-pointer font-medium outline-none ${statusColors[order.status]}`}
@@ -70,14 +72,14 @@ export const Orders: React.FC = () => {
                     </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">
-                        <button 
+                        <button
                           onClick={() => setExpandedOrder(expandedOrder === order.id ? null : order.id)}
                           className="p-2 text-gray-500 hover:bg-gray-100 rounded"
                         >
                           {expandedOrder === order.id ? <ChevronDown size={16} /> : <Eye size={16} />}
                         </button>
-                        <button 
-                          onClick={() => { if(window.confirm('Supprimer la commande ?')) deleteOrder(order.id) }}
+                        <button
+                          onClick={() => { if (window.confirm('Supprimer la commande ?')) deleteOrder(order.id) }}
                           className="p-2 text-red-500 hover:bg-red-50 rounded"
                         >
                           <Trash2 size={16} />
@@ -106,7 +108,7 @@ export const Orders: React.FC = () => {
                                   <div>
                                     <span className="font-medium">{item.quantity}x {item.name}</span>
                                     <div className="text-gray-400 text-xs">
-                                      {item.selectedSize && `Taille: ${item.selectedSize}`} 
+                                      {item.selectedSize && `Taille: ${item.selectedSize}`}
                                       {item.selectedColor && `, Couleur: ${item.selectedColor}`}
                                     </div>
                                   </div>

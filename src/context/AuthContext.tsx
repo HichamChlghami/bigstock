@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { supabase } from '../lib/supabase';
 
@@ -13,15 +15,15 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Initialize directly from storage to prevent redirect loop on refresh
-  const [isAuthenticated, setIsAuthenticated] = useState(() => {
-    const authLocal = localStorage.getItem('admin_auth');
-    const authSession = sessionStorage.getItem('admin_auth');
-    return authLocal === 'true' || authSession === 'true';
-  });
-  
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [adminEmail, setAdminEmail] = useState('admin@luxe.com');
 
   useEffect(() => {
+    const authLocal = localStorage.getItem('admin_auth');
+    const authSession = sessionStorage.getItem('admin_auth');
+    if (authLocal === 'true' || authSession === 'true') {
+      setIsAuthenticated(true);
+    }
     // Fetch current admin email for display purposes
     fetchAdminEmail();
   }, []);
@@ -33,7 +35,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         .select('value')
         .eq('key', 'admin_email')
         .single();
-      
+
       if (data) {
         setAdminEmail(data.value);
       }
@@ -63,7 +65,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (email === dbEmail && pass === dbPass) {
         setIsAuthenticated(true);
         setAdminEmail(dbEmail);
-        
+
         if (remember) {
           localStorage.setItem('admin_auth', 'true');
         } else {

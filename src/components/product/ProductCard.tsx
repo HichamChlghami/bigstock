@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import Link from 'next/link';
 import { Heart, ShoppingCart } from 'lucide-react';
 import { Product } from '../../types';
 import { useCart } from '../../context/CartContext';
@@ -16,14 +15,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const displayOriginalPrice = product.originalPrice || product.price * 1.25;
   const productSlug = product.slug || slugify(product.name);
-  
+
   // Display primary category or first available
-  const displayCategory = product.categories && product.categories.length > 0 
-    ? product.categories[0] 
+  const displayCategory = product.categories && product.categories.length > 0
+    ? product.categories[0]
     : product.category || 'Produit';
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -31,16 +30,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
       className="group bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col h-full border border-gray-100"
     >
       <div className="relative aspect-square overflow-hidden bg-white p-4 flex items-center justify-center">
-        <Link to={`/products/${productSlug}`} className="block w-full h-full flex items-center justify-center">
-          <img 
-            src={product.image} 
-            alt={product.name} 
+        <Link href={`/products/${productSlug}`} className="block w-full h-full flex items-center justify-center">
+          <img
+            src={product.image}
+            alt={product.name}
             className="max-w-full max-h-full object-contain transition-transform duration-700 group-hover:scale-105"
           />
         </Link>
-        
+
         <div className="absolute bottom-4 left-0 right-0 px-4 flex justify-between items-center opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
-          <button 
+          <button
             onClick={(e) => {
               e.preventDefault();
               addToCart(product);
@@ -49,7 +48,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
           >
             <ShoppingCart size={16} /> Ajouter
           </button>
-          <button 
+          <button
             onClick={(e) => {
               e.preventDefault();
               toggleWishlist(product.id);
@@ -63,12 +62,12 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
       <div className="p-4 flex flex-col flex-grow border-t border-gray-50">
         <p className="text-xs text-gray-500 uppercase tracking-wide mb-1">{displayCategory}</p>
-        <Link to={`/products/${productSlug}`} className="block mb-2">
+        <Link href={`/products/${productSlug}`} className="block mb-2">
           <h3 className="text-base font-medium text-primary truncate group-hover:text-accent transition-colors">
             {product.name}
           </h3>
         </Link>
-        
+
         <div className="mt-auto flex items-center gap-3">
           <span className="text-lg font-bold text-accent">{product.price.toFixed(2)} MAD</span>
           <span className="text-sm text-gray-400 line-through">{displayOriginalPrice.toFixed(2)} MAD</span>

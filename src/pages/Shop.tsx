@@ -1,5 +1,7 @@
+'use client';
+
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'next/navigation';
 import { ProductCard } from '../components/product/ProductCard';
 import { ProductSkeleton } from '../components/product/ProductSkeleton';
 import { useData } from '../context/DataContext';
@@ -8,19 +10,19 @@ import { Filter, Search, ChevronLeft, ChevronRight } from 'lucide-react';
 export const Shop: React.FC = () => {
   const { category } = useParams<{ category?: string }>();
   const { products, categories, isLoading } = useData();
-  
+
   const [filteredProducts, setFilteredProducts] = useState(products);
   const [activeCategory, setActiveCategory] = useState<string>(category || 'Tout');
   const [searchQuery, setSearchQuery] = useState('');
-  
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 15;
 
   useEffect(() => {
     let result = products;
-    
+
     if (activeCategory !== 'Tout') {
-      result = result.filter(p => 
+      result = result.filter(p =>
         p.categories.some(c => c.toLowerCase() === activeCategory.toLowerCase())
       );
     }
@@ -69,9 +71,9 @@ export const Shop: React.FC = () => {
 
         {/* Enhanced Search Bar */}
         <div className="relative w-full md:w-auto md:min-w-[400px]">
-          <input 
-            type="text" 
-            placeholder="Rechercher des produits..." 
+          <input
+            type="text"
+            placeholder="Rechercher des produits..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="w-full pl-12 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-full focus:border-accent focus:bg-white focus:ring-2 focus:ring-accent/20 outline-none transition-all shadow-sm"
@@ -84,7 +86,7 @@ export const Shop: React.FC = () => {
         {/* Sidebar Filters */}
         <aside className="w-full lg:w-64 flex-shrink-0">
           <div className="sticky top-24 space-y-8">
-            
+
             {/* Categories */}
             <div>
               <h3 className="font-bold text-lg mb-4 flex items-center gap-2">
@@ -93,7 +95,7 @@ export const Shop: React.FC = () => {
               <ul className="space-y-2">
                 {categoryNames.map(cat => (
                   <li key={cat}>
-                    <button 
+                    <button
                       onClick={() => setActiveCategory(cat)}
                       className={`text-sm w-full text-left py-2 px-3 rounded-md transition-colors ${activeCategory === cat ? 'bg-primary text-white' : 'text-gray-600 hover:bg-gray-100'}`}
                     >
@@ -103,7 +105,7 @@ export const Shop: React.FC = () => {
                 ))}
               </ul>
             </div>
-            
+
           </div>
         </aside>
 
@@ -124,29 +126,28 @@ export const Shop: React.FC = () => {
               {/* Pagination Controls */}
               {totalPages > 1 && (
                 <div className="flex justify-center items-center gap-2">
-                  <button 
+                  <button
                     onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
                     disabled={currentPage === 1}
                     className="p-2 border border-gray-200 rounded-md disabled:opacity-50 hover:bg-gray-50 transition-colors"
                   >
                     <ChevronLeft size={20} />
                   </button>
-                  
+
                   {[...Array(totalPages)].map((_, i) => (
                     <button
                       key={i}
                       onClick={() => handlePageChange(i + 1)}
-                      className={`w-10 h-10 rounded-md font-medium transition-colors ${
-                        currentPage === i + 1 
-                          ? 'bg-accent text-white shadow-md' 
+                      className={`w-10 h-10 rounded-md font-medium transition-colors ${currentPage === i + 1
+                          ? 'bg-accent text-white shadow-md'
                           : 'border border-gray-200 hover:bg-gray-50 text-gray-600'
-                      }`}
+                        }`}
                     >
                       {i + 1}
                     </button>
                   ))}
 
-                  <button 
+                  <button
                     onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
                     disabled={currentPage === totalPages}
                     className="p-2 border border-gray-200 rounded-md disabled:opacity-50 hover:bg-gray-50 transition-colors"
