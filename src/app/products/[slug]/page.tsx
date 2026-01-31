@@ -1,6 +1,6 @@
 'use client';
 
-import { ProductDetails } from "../../../pages/ProductDetails";
+import { ProductDetails } from "../../../views/ProductDetails";
 
 export default function Page() {
     return <ProductDetails />;

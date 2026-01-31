@@ -1,4 +1,4 @@
-import { Shipping } from "../../pages/StaticPages";
+import { Shipping } from "../../views/StaticPages";
 
 export default function Page() {
     return <Shipping />;

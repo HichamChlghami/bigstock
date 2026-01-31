@@ -1,6 +1,6 @@
 'use client';
 
-import { Products } from "../../../pages/admin/Products";
+import { Products } from "../../../views/admin/Products";
 
 export default function Page() {
     return <Products />;
