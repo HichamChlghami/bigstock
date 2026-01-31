@@ -1,19 +1,27 @@
 'use client';
 
 import { useAuth } from "../../context/AuthContext";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useEffect } from "react";
 import { AdminLayout as BaseAdminLayout } from "../../components/admin/AdminLayout";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
-    const { isAuthenticated, isLoading = false } = useAuth() as any;
+    const { isAuthenticated, isLoading } = useAuth();
     const router = useRouter();
+    const pathname = usePathname();
+    const isLoginPage = pathname === "/admin/login";
 
     useEffect(() => {
-        if (!isLoading && !isAuthenticated) {
+        // Only redirect to login if we are NOT on the login page already
+        if (!isLoading && !isAuthenticated && !isLoginPage) {
             router.push("/admin/login");
         }
-    }, [isAuthenticated, isLoading, router]);
+    }, [isAuthenticated, isLoading, router, isLoginPage]);
+
+    // If on login page, just render it without layout protection
+    if (isLoginPage) {
+        return <>{children}</>;
+    }
 
     if (isLoading || !isAuthenticated) {
         return (

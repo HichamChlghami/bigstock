@@ -9,6 +9,7 @@ interface AuthContextType {
   logout: () => void;
   updateCredentials: (email: string, pass: string) => Promise<void>;
   adminEmail: string;
+  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -16,6 +17,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   // Initialize directly from storage to prevent redirect loop on refresh
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [adminEmail, setAdminEmail] = useState('admin@luxe.com');
 
   useEffect(() => {
@@ -25,7 +27,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       setIsAuthenticated(true);
     }
     // Fetch current admin email for display purposes
-    fetchAdminEmail();
+    fetchAdminEmail().finally(() => {
+      setIsLoading(false);
+    });
   }, []);
 
   const fetchAdminEmail = async () => {
@@ -113,7 +117,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout, updateCredentials, adminEmail }}>
+    <AuthContext.Provider value={{ isAuthenticated, isLoading, login, logout, updateCredentials, adminEmail }}>
       {children}
     </AuthContext.Provider>
   );
