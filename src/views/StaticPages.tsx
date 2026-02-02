@@ -106,7 +106,7 @@ export const Contact: React.FC = () => {
                 <div>
                   <h3 className="font-bold text-xl text-primary mb-1">Support Téléphonique</h3>
                   <p className="text-gray-500 text-sm mb-2">Lun-Ven de 9h à 18h</p>
-                  <a href="tel:+212600000000" className="text-lg font-medium text-primary hover:text-accent transition-colors border-b border-transparent hover:border-accent">+212 600-000000</a>
+                  <a href="tel:0763321581" className="text-lg font-medium text-primary hover:text-accent transition-colors border-b border-transparent hover:border-accent">0763321581</a>
                 </div>
               </div>
 
@@ -117,7 +117,7 @@ export const Contact: React.FC = () => {
                 <div>
                   <h3 className="font-bold text-xl text-primary mb-1">Email</h3>
                   <p className="text-gray-500 text-sm mb-2">Nous répondons sous 24h</p>
-                  <a href="mailto:support@bigstock.ma" className="text-lg font-medium text-primary hover:text-accent transition-colors border-b border-transparent hover:border-accent">support@bigstock.ma</a>
+                  <a href="mailto:Bouabbimajid@gmail.com" className="text-lg font-medium text-primary hover:text-accent transition-colors border-b border-transparent hover:border-accent">Bouabbimajid@gmail.com</a>
                 </div>
               </div>
 
@@ -128,7 +128,7 @@ export const Contact: React.FC = () => {
                 <div>
                   <h3 className="font-bold text-xl text-primary mb-1">Magasin Principal</h3>
                   <p className="text-gray-500 text-sm mb-2">Venez visiter notre showroom</p>
-                  <p className="text-lg font-medium text-primary">123 Avenue de la Mode, Casablanca</p>
+                  <p className="text-lg font-medium text-primary">Rue Salem cherkaoui 23, Quartier des hôpitaux casablanca</p>
                 </div>
               </div>
             </div>

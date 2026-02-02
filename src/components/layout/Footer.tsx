@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { Facebook, Instagram, Twitter, Phone, Mail, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Phone, Mail, MapPin } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   return (
@@ -21,7 +21,6 @@ export const Footer: React.FC = () => {
             <div className="flex space-x-4">
               <a href="#" className="text-gray-400 hover:text-accent transition-colors"><Instagram size={20} /></a>
               <a href="#" className="text-gray-400 hover:text-accent transition-colors"><Facebook size={20} /></a>
-              <a href="#" className="text-gray-400 hover:text-accent transition-colors"><Twitter size={20} /></a>
             </div>
           </div>
 
@@ -53,15 +52,15 @@ export const Footer: React.FC = () => {
             <ul className="space-y-4 text-sm text-gray-400">
               <li className="flex items-start">
                 <MapPin size={18} className="mr-3 mt-0.5 text-accent" />
-                <span>123 Avenue de la Mode,<br />Casablanca, Maroc</span>
+                <span>Rue Salem cherkaoui 23,<br />Quartier des hôpitaux casablanca</span>
               </li>
               <li className="flex items-center">
                 <Phone size={18} className="mr-3 text-accent" />
-                <span>+212 600-000000</span>
+                <span>0763321581</span>
               </li>
               <li className="flex items-center">
                 <Mail size={18} className="mr-3 text-accent" />
-                <span>support@bigstock.ma</span>
+                <span>Bouabbimajid@gmail.com</span>
               </li>
             </ul>
           </div>

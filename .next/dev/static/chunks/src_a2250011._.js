@@ -783,6 +783,7 @@ const AuthProvider = ({ children })=>{
     _s();
     // Initialize directly from storage to prevent redirect loop on refresh
     const [isAuthenticated, setIsAuthenticated] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [isLoading, setIsLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [adminEmail, setAdminEmail] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('admin@luxe.com');
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AuthProvider.useEffect": ()=>{
@@ -792,7 +793,11 @@ const AuthProvider = ({ children })=>{
                 setIsAuthenticated(true);
             }
             // Fetch current admin email for display purposes
-            fetchAdminEmail();
+            fetchAdminEmail().finally({
+                "AuthProvider.useEffect": ()=>{
+                    setIsLoading(false);
+                }
+            }["AuthProvider.useEffect"]);
         }
     }["AuthProvider.useEffect"], []);
     const fetchAdminEmail = async ()=>{
@@ -860,6 +865,7 @@ const AuthProvider = ({ children })=>{
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(AuthContext.Provider, {
         value: {
             isAuthenticated,
+            isLoading,
             login,
             logout,
             updateCredentials,
@@ -868,11 +874,11 @@ const AuthProvider = ({ children })=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/src/context/AuthContext.tsx",
-        lineNumber: 116,
+        lineNumber: 120,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(AuthProvider, "NT+NbkWPvTu9m5CZEZb3xL8t0z8=");
+_s(AuthProvider, "CWQc238QephC7EKHhKXexKkyE34=");
 _c = AuthProvider;
 const useAuth = ()=>{
     _s1();

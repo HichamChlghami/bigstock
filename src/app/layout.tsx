@@ -42,7 +42,7 @@ export default function RootLayout({
                                 <main className="flex-grow">{children}</main>
                                 <Footer />
                                 <a
-                                    href="https://wa.me/15551234567"
+                                    href="https://wa.me/212763321581"
                                     target="_blank"
                                     rel="noreferrer"
                                     className="fixed bottom-6 right-6 z-40 bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:bg-[#128C7E] transition-transform hover:scale-110 flex items-center justify-center"
