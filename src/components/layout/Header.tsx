@@ -57,7 +57,7 @@ export const Header: React.FC = () => {
 
             <Link href="/" className="absolute left-1/2 -translate-x-1/2">
               <img
-                src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png"
+                src="/logo.png"
                 alt="BigStock"
                 className="h-10 w-auto object-contain"
               />
@@ -74,7 +74,7 @@ export const Header: React.FC = () => {
           {/* Desktop Logo */}
           <Link href="/" className="hidden lg:block">
             <img
-              src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png"
+              src="/logo.png"
               alt="BigStock"
               className="h-12 w-auto object-contain"
             />

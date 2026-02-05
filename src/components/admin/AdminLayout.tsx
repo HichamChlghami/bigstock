@@ -33,7 +33,7 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
         <div className="p-6 border-b border-gray-800">
           <Link href="/" className="flex items-center gap-2">
             <img
-              src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png"
+              src="/logo.png"
               alt="BigStock"
               className="h-8 w-auto object-contain"
             />
@@ -82,7 +82,7 @@ export const AdminLayout: React.FC<{ children: React.ReactNode }> = ({ children 
         <div className="md:hidden bg-primary text-white p-4 flex justify-between items-center sticky top-0 z-20">
           <Link href="/">
             <img
-              src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png"
+              src="/logo.png"
               alt="BigStock"
               className="h-8 w-auto object-contain"
             />

@@ -22,6 +22,9 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
     title: "BigStock | Premium Fashion & Lifestyle",
     description: "Arrivage Récent - Nouvelle Collection 2026. Découvrez le futur de la mode.",
+    icons: {
+        icon: "/favicon.ico",
+    },
 };
 
 export default function RootLayout({

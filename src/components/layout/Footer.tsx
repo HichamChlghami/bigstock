@@ -10,7 +10,7 @@ export const Footer: React.FC = () => {
           <div>
             <Link href="/" className="inline-block mb-6">
               <img
-                src="https://tes.marchecom.com/bigstock-logo-removebg-preview.png"
+                src="/logo.png"
                 alt="BigStock"
                 className="h-12 w-auto object-contain"
               />
