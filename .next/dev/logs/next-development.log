@@ -1,6 +1,4 @@
-[00:01:19.762] Server  LOG     ✓ Ready in 56.9s
-[00:15:43.476] Server  LOG     ○ Compiling / ...
-[00:17:24.430] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:18:06.982] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:00:20.663] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[01:13:31.911] Server  LOG     ✓ Finished writing to filesystem cache in 23.2s
+[00:01:06.898] Server  LOG     ✓ Ready in 55.2s
+[00:04:07.918] Server  LOG     ○ Compiling /admin/settings ...
+[00:04:57.949] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:05:01.569] Server  LOG     ○ Compiling /api/settings ...

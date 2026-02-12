@@ -93,7 +93,13 @@ export const Products: React.FC = () => {
                 <tr key={product.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <img src={product.image} alt="" className="w-10 h-10 rounded object-contain bg-gray-100 border border-gray-200" />
+                      {product.image ? (
+                        <img src={product.image} alt="" className="w-10 h-10 rounded object-contain bg-gray-100 border border-gray-200" />
+                      ) : (
+                        <div className="w-10 h-10 rounded bg-gray-200 border border-gray-300 flex items-center justify-center">
+                          <span className="text-gray-400 text-xs">N/A</span>
+                        </div>
+                      )}
                       <div>
                         <p className="font-medium text-primary text-sm">{product.name}</p>
                         <div className="flex gap-1 mt-1">

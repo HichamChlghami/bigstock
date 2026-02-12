@@ -22,6 +22,30 @@
   },
   "dynamicRoutes": [
     {
+      "page": "/api/categories/[id]",
+      "regex": "^/api/categories/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/categories/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/orders/[id]",
+      "regex": "^/api/orders/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/orders/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
+      "page": "/api/products/[id]",
+      "regex": "^/api/products/([^/]+?)(?:/)?$",
+      "routeKeys": {
+        "nxtPid": "nxtPid"
+      },
+      "namedRegex": "^/api/products/(?<nxtPid>[^/]+?)(?:/)?$"
+    },
+    {
       "page": "/category/[category]",
       "regex": "^/category/([^/]+?)(?:/)?$",
       "routeKeys": {
@@ -98,6 +122,36 @@
       "regex": "^/admin/settings(?:/)?$",
       "routeKeys": {},
       "namedRegex": "^/admin/settings(?:/)?$"
+    },
+    {
+      "page": "/api/categories",
+      "regex": "^/api/categories(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/categories(?:/)?$"
+    },
+    {
+      "page": "/api/orders",
+      "regex": "^/api/orders(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/orders(?:/)?$"
+    },
+    {
+      "page": "/api/products",
+      "regex": "^/api/products(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/products(?:/)?$"
+    },
+    {
+      "page": "/api/settings",
+      "regex": "^/api/settings(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/settings(?:/)?$"
+    },
+    {
+      "page": "/api/upload",
+      "regex": "^/api/upload(?:/)?$",
+      "routeKeys": {},
+      "namedRegex": "^/api/upload(?:/)?$"
     },
     {
       "page": "/checkout",

@@ -73,7 +73,7 @@ export const Checkout: React.FC = () => {
         });
       } catch (gsError) {
         console.error("Google Sheets Backup Error:", gsError);
-        // We don't block the user if backup fails but Supabase succeeded
+        // We don't block the user if backup fails but the main order was saved
       }
 
       setIsSuccess(true); // Mark as success BEFORE clearing cart

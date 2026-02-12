@@ -10,32 +10,45 @@ interface ImageInputProps {
   className?: string;
 }
 
-export const ImageInput: React.FC<ImageInputProps> = ({ 
-  label, 
-  value, 
-  onChange, 
+export const ImageInput: React.FC<ImageInputProps> = ({
+  label,
+  value,
+  onChange,
   onRemove,
-  className 
+  className
 }) => {
   const [mode, setMode] = useState<'upload' | 'url'>('upload');
   const [urlInput, setUrlInput] = useState('');
   const [error, setError] = useState('');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      if (file.size > 1024 * 1024) { // 1MB limit
-        setError('Max file size is 1MB');
+      if (file.size > 5 * 1024 * 1024) { // Increased to 5MB for convenience
+        setError('Max file size is 5MB');
         return;
       }
       setError('');
-      
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        onChange(reader.result as string);
-      };
-      reader.readAsDataURL(file);
+
+      const formData = new FormData();
+      formData.append('file', file);
+
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData,
+        });
+
+        if (res.ok) {
+          const data = await res.json();
+          onChange(data.url);
+        } else {
+          setError('Upload failed');
+        }
+      } catch (err) {
+        setError('Upload error');
+      }
     }
   };
 
@@ -49,13 +62,13 @@ export const ImageInput: React.FC<ImageInputProps> = ({
   return (
     <div className={className}>
       {label && <label className="block text-sm font-medium text-gray-700 mb-2">{label}</label>}
-      
+
       {value ? (
         <div className="relative group aspect-square w-full bg-gray-50 rounded-lg border border-gray-200 overflow-hidden flex items-center justify-center p-2">
           {/* STRICTLY FIT CONTENT */}
           <img src={value} alt="Preview" className="w-full h-full object-contain" />
           {onRemove && (
-            <button 
+            <button
               type="button"
               onClick={onRemove}
               className="absolute top-2 right-2 bg-red-500 text-white p-1.5 rounded-full shadow-md hover:bg-red-600 transition-colors"
@@ -66,7 +79,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
         </div>
       ) : (
         <div className="w-full aspect-square bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center">
-          
+
           {/* Mode Switcher */}
           <div className="flex gap-2 mb-4 bg-gray-200 p-1 rounded-md">
             <button
@@ -92,12 +105,12 @@ export const ImageInput: React.FC<ImageInputProps> = ({
               <ImageIcon className="text-gray-400 mb-2" size={24} />
               <span className="text-xs text-gray-500 font-medium">Click to Upload</span>
               <span className="text-[10px] text-gray-400 mt-1">Max 1MB</span>
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                className="hidden" 
-                accept="image/*" 
-                onChange={handleFileChange} 
+              <input
+                type="file"
+                ref={fileInputRef}
+                className="hidden"
+                accept="image/*"
+                onChange={handleFileChange}
               />
             </div>
           ) : (
@@ -114,7 +127,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
               </Button>
             </div>
           )}
-          
+
           {error && <p className="text-xs text-red-500 mt-2">{error}</p>}
         </div>
       )}

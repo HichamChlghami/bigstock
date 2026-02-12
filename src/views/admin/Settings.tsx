@@ -15,6 +15,7 @@ export const Settings: React.FC = () => {
   const [message, setMessage] = useState('');
   const [seedStatus, setSeedStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isSavingCreds, setIsSavingCreds] = useState(false);
+  const [isSavingAnalytics, setIsSavingAnalytics] = useState(false);
 
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
@@ -36,25 +37,28 @@ export const Settings: React.FC = () => {
   }, [adminEmail]);
 
   useEffect(() => {
-    setGaId(localStorage.getItem('ga_id') || '');
+    // Load analytics settings from MongoDB via API
+    const loadAnalyticsSettings = async () => {
+      try {
+        const [gaRes, pixelRes, tiktokRes] = await Promise.all([
+          fetch('/api/settings?key=ga_id'),
+          fetch('/api/settings?key=pixel_ids'),
+          fetch('/api/settings?key=tiktok_ids'),
+        ]);
 
-    // Load Meta Pixels
-    try {
-      const savedPixels = JSON.parse(localStorage.getItem('pixel_ids') || '[]');
-      setPixelIds(savedPixels);
-    } catch {
-      const oldId = localStorage.getItem('pixel_id');
-      if (oldId) setPixelIds([oldId]);
-    }
+        const gaData = await gaRes.json();
+        const pixelData = await pixelRes.json();
+        const tiktokData = await tiktokRes.json();
 
-    // Load TikTok Pixels
-    try {
-      const savedTiktoks = JSON.parse(localStorage.getItem('tiktok_ids') || '[]');
-      setTiktokIds(savedTiktoks);
-    } catch {
-      const oldId = localStorage.getItem('tiktok_id');
-      if (oldId) setTiktokIds([oldId]);
-    }
+        if (gaData?.value) setGaId(gaData.value);
+        if (pixelData?.value) setPixelIds(pixelData.value);
+        if (tiktokData?.value) setTiktokIds(tiktokData.value);
+      } catch (error) {
+        console.error('Failed to load analytics settings:', error);
+      }
+    };
+
+    loadAnalyticsSettings();
 
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
@@ -83,12 +87,34 @@ export const Settings: React.FC = () => {
     }
   };
 
-  const handleAnalyticsSave = (e: React.FormEvent) => {
+  const handleAnalyticsSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    localStorage.setItem('ga_id', gaId);
-    localStorage.setItem('pixel_ids', JSON.stringify(pixelIds));
-    localStorage.setItem('tiktok_ids', JSON.stringify(tiktokIds));
-    showMessage('Paramètres analytiques enregistrés ! Rafraîchissez pour appliquer.');
+    setIsSavingAnalytics(true);
+    try {
+      await Promise.all([
+        fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: 'ga_id', value: gaId }),
+        }),
+        fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: 'pixel_ids', value: pixelIds }),
+        }),
+        fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key: 'tiktok_ids', value: tiktokIds }),
+        }),
+      ]);
+      showMessage('Paramètres analytiques enregistrés ! Rafraîchissez pour appliquer.');
+    } catch (error) {
+      console.error('Failed to save analytics settings:', error);
+      showMessage('Erreur lors de la sauvegarde.', true);
+    } finally {
+      setIsSavingAnalytics(false);
+    }
   };
 
   // --- Pixel Logic ---
@@ -290,8 +316,8 @@ export const Settings: React.FC = () => {
               </div>
             </div>
 
-            <Button type="submit" variant="secondary" className="mt-2">
-              Enregistrer les Paramètres
+            <Button type="submit" variant="secondary" className="mt-2" disabled={isSavingAnalytics}>
+              {isSavingAnalytics ? 'Enregistrement...' : 'Enregistrer les Paramètres'}
             </Button>
           </form>
         </div>

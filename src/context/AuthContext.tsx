@@ -1,7 +1,6 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { supabase } from '../lib/supabase';
 
 interface AuthContextType {
   isAuthenticated: boolean;
@@ -15,7 +14,6 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  // Initialize directly from storage to prevent redirect loop on refresh
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [adminEmail, setAdminEmail] = useState('admin@luxe.com');
@@ -26,7 +24,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     if (authLocal === 'true' || authSession === 'true') {
       setIsAuthenticated(true);
     }
-    // Fetch current admin email for display purposes
     fetchAdminEmail().finally(() => {
       setIsLoading(false);
     });
@@ -34,14 +31,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const fetchAdminEmail = async () => {
     try {
-      const { data } = await supabase
-        .from('app_settings')
-        .select('value')
-        .eq('key', 'admin_email')
-        .single();
-
-      if (data) {
-        setAdminEmail(data.value);
+      const res = await fetch('/api/settings?key=admin_email');
+      if (res.ok) {
+        const data = await res.json();
+        if (data && data.value) {
+          setAdminEmail(data.value);
+        }
       }
     } catch (error) {
       console.error("Error fetching admin email:", error);
@@ -50,21 +45,20 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, pass: string, remember: boolean) => {
     try {
-      // Fetch credentials from DB
-      const { data: emailData } = await supabase
-        .from('app_settings')
-        .select('value')
-        .eq('key', 'admin_email')
-        .single();
+      const resEmail = await fetch('/api/settings?key=admin_email');
+      const resPass = await fetch('/api/settings?key=admin_password');
 
-      const { data: passData } = await supabase
-        .from('app_settings')
-        .select('value')
-        .eq('key', 'admin_password')
-        .single();
+      let dbEmail = 'admin@bigstock.ma';
+      let dbPass = 'bigstock';
 
-      const dbEmail = emailData?.value || 'admin@luxe.com';
-      const dbPass = passData?.value || 'admin123';
+      if (resEmail.ok) {
+        const data = await resEmail.json();
+        if (data && data.value) dbEmail = data.value;
+      }
+      if (resPass.ok) {
+        const data = await resPass.json();
+        if (data && data.value) dbPass = data.value;
+      }
 
       if (email === dbEmail && pass === dbPass) {
         setIsAuthenticated(true);
@@ -80,7 +74,6 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       return false;
     } catch (error) {
       console.error("Login error:", error);
-      // Fallback to hardcoded if DB fails (safety net)
       if (email === 'admin@luxe.com' && pass === 'admin123') {
         setIsAuthenticated(true);
         return true;
@@ -97,17 +90,17 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const updateCredentials = async (email: string, pass: string) => {
     try {
-      // Update Email
-      const { error: emailError } = await supabase
-        .from('app_settings')
-        .upsert({ key: 'admin_email', value: email });
+      await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'admin_email', value: email }),
+      });
 
-      // Update Password
-      const { error: passError } = await supabase
-        .from('app_settings')
-        .upsert({ key: 'admin_password', value: pass });
-
-      if (emailError || passError) throw new Error("Failed to update credentials");
+      await fetch('/api/settings', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ key: 'admin_password', value: pass }),
+      });
 
       setAdminEmail(email);
     } catch (error) {

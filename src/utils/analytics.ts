@@ -9,29 +9,25 @@ const injectScript = (id: string, src: string, content?: string) => {
   document.head.appendChild(script);
 };
 
+// Fetch a setting value from the API
+async function fetchSetting(key: string): Promise<any> {
+  try {
+    const res = await fetch(`/api/settings?key=${key}`);
+    const data = await res.json();
+    return data?.value ?? null;
+  } catch {
+    return null;
+  }
+}
+
 export const analytics = {
-  initialize: () => {
-    const gaId = localStorage.getItem('ga_id');
-    
-    // Parse multiple IDs (stored as JSON arrays)
-    let pixelIds: string[] = [];
-    let tiktokIds: string[] = [];
-
-    try {
-      pixelIds = JSON.parse(localStorage.getItem('pixel_ids') || '[]');
-    } catch (e) {
-      // Fallback for old single string format
-      const oldId = localStorage.getItem('pixel_id');
-      if (oldId) pixelIds = [oldId];
-    }
-
-    try {
-      tiktokIds = JSON.parse(localStorage.getItem('tiktok_ids') || '[]');
-    } catch (e) {
-      // Fallback for old single string format
-      const oldId = localStorage.getItem('tiktok_id');
-      if (oldId) tiktokIds = [oldId];
-    }
+  initialize: async () => {
+    // Fetch all analytics settings from MongoDB via API
+    const [gaId, pixelIds, tiktokIds] = await Promise.all([
+      fetchSetting('ga_id'),
+      fetchSetting('pixel_ids'),
+      fetchSetting('tiktok_ids'),
+    ]);
 
     // Google Analytics 4
     if (gaId) {
@@ -45,9 +41,9 @@ export const analytics = {
     }
 
     // Meta Pixel (Multiple)
-    if (pixelIds.length > 0) {
-      const initCalls = pixelIds.map(id => `fbq('init', '${id}');`).join('\n');
-      
+    if (pixelIds && Array.isArray(pixelIds) && pixelIds.length > 0) {
+      const initCalls = pixelIds.map((id: string) => `fbq('init', '${id}');`).join('\n');
+
       injectScript('meta-pixel', '', `
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -63,8 +59,8 @@ export const analytics = {
     }
 
     // TikTok Pixel (Multiple)
-    if (tiktokIds.length > 0) {
-      const loadCalls = tiktokIds.map(id => `ttq.load('${id}');`).join('\n');
+    if (tiktokIds && Array.isArray(tiktokIds) && tiktokIds.length > 0) {
+      const loadCalls = tiktokIds.map((id: string) => `ttq.load('${id}');`).join('\n');
 
       injectScript('tiktok-pixel', '', `
         !function (w, d, t) {

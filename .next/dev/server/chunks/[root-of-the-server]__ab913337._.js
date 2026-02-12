@@ -1,0 +1,147 @@
+module.exports = [
+"[externals]/next/dist/compiled/next-server/app-route-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-route-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/next-server/app-route-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-route-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/@opentelemetry/api [external] (next/dist/compiled/@opentelemetry/api, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/@opentelemetry/api", () => require("next/dist/compiled/@opentelemetry/api"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/compiled/next-server/app-page-turbo.runtime.dev.js [external] (next/dist/compiled/next-server/app-page-turbo.runtime.dev.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js", () => require("next/dist/compiled/next-server/app-page-turbo.runtime.dev.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-unit-async-storage.external.js [external] (next/dist/server/app-render/work-unit-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/work-unit-async-storage.external.js", () => require("next/dist/server/app-render/work-unit-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/work-async-storage.external.js [external] (next/dist/server/app-render/work-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/work-async-storage.external.js", () => require("next/dist/server/app-render/work-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/shared/lib/no-fallback-error.external.js [external] (next/dist/shared/lib/no-fallback-error.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/shared/lib/no-fallback-error.external.js", () => require("next/dist/shared/lib/no-fallback-error.external.js"));
+
+module.exports = mod;
+}),
+"[externals]/next/dist/server/app-render/after-task-async-storage.external.js [external] (next/dist/server/app-render/after-task-async-storage.external.js, cjs)", ((__turbopack_context__, module, exports) => {
+
+const mod = __turbopack_context__.x("next/dist/server/app-render/after-task-async-storage.external.js", () => require("next/dist/server/app-render/after-task-async-storage.external.js"));
+
+module.exports = mod;
+}),
+"[project]/src/lib/mongodb.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "default",
+    ()=>__TURBOPACK__default__export__,
+    "getCollection",
+    ()=>getCollection,
+    "getDb",
+    ()=>getDb
+]);
+var __TURBOPACK__imported__module__$5b$externals$5d2f$mongodb__$5b$external$5d$__$28$mongodb$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f$mongodb$29$__ = __turbopack_context__.i("[externals]/mongodb [external] (mongodb, cjs, [project]/node_modules/mongodb)");
+;
+if (!process.env.MONGODB_URI) {
+    throw new Error('Invalid/Missing environment variable: "MONGODB_URI"');
+}
+const uri = process.env.MONGODB_URI;
+const options = {};
+let client;
+let clientPromise;
+if ("TURBOPACK compile-time truthy", 1) {
+    // In development mode, use a global variable so that the value
+    // is preserved across module reloads caused by HMR (Hot Module Replacement).
+    let globalWithMongo = /*TURBOPACK member replacement*/ __turbopack_context__.g;
+    if (!globalWithMongo._mongoClientPromise) {
+        client = new __TURBOPACK__imported__module__$5b$externals$5d2f$mongodb__$5b$external$5d$__$28$mongodb$2c$__cjs$2c$__$5b$project$5d2f$node_modules$2f$mongodb$29$__["MongoClient"](uri, options);
+        globalWithMongo._mongoClientPromise = client.connect();
+    }
+    clientPromise = globalWithMongo._mongoClientPromise;
+} else //TURBOPACK unreachable
+;
+const __TURBOPACK__default__export__ = clientPromise;
+async function getDb() {
+    const client = await clientPromise;
+    return client.db();
+}
+async function getCollection(collectionName) {
+    const db = await getDb();
+    return db.collection(collectionName);
+}
+}),
+"[project]/src/app/api/products/route.ts [app-route] (ecmascript)", ((__turbopack_context__) => {
+"use strict";
+
+__turbopack_context__.s([
+    "GET",
+    ()=>GET,
+    "POST",
+    ()=>POST
+]);
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/server.js [app-route] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$mongodb$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/lib/mongodb.ts [app-route] (ecmascript)");
+;
+;
+async function GET() {
+    try {
+        const collection = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$mongodb$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getCollection"])('products');
+        const products = await collection.find({}).sort({
+            created_at: -1
+        }).toArray();
+        // Map _id to id for frontend compatibility
+        const mappedProducts = products.map((p)=>({
+                ...p,
+                id: p._id.toString(),
+                _id: undefined
+            }));
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(mappedProducts);
+    } catch (error) {
+        console.error('Database Error:', error);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: 'Internal Server Error'
+        }, {
+            status: 500
+        });
+    }
+}
+async function POST(request) {
+    try {
+        const body = await request.json();
+        const collection = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$mongodb$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getCollection"])('products');
+        const newProduct = {
+            ...body,
+            created_at: new Date().toISOString()
+        };
+        const result = await collection.insertOne(newProduct);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            ...newProduct,
+            id: result.insertedId.toString()
+        }, {
+            status: 201
+        });
+    } catch (error) {
+        console.error('Database Error:', error);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            error: 'Internal Server Error'
+        }, {
+            status: 500
+        });
+    }
+}
+}),
+];
+
+//# sourceMappingURL=%5Broot-of-the-server%5D__ab913337._.js.map

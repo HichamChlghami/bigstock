@@ -74,7 +74,7 @@ const AdminLayout = ({ children })=>{
                             className: "flex items-center gap-2",
                             children: [
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                    src: "https://tes.marchecom.com/bigstock-logo-removebg-preview.png",
+                                    src: "/logo.png",
                                     alt: "BigStock",
                                     className: "h-8 w-auto object-contain"
                                 }, void 0, false, {
@@ -186,7 +186,7 @@ const AdminLayout = ({ children })=>{
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/",
                                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                    src: "https://tes.marchecom.com/bigstock-logo-removebg-preview.png",
+                                    src: "/logo.png",
                                     alt: "BigStock",
                                     className: "h-8 w-auto object-contain"
                                 }, void 0, false, {
@@ -283,17 +283,27 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$admin$2
 ;
 ;
 function AdminLayout({ children }) {
-    const { isAuthenticated, isLoading = false } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$AuthContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAuth"])();
+    const { isAuthenticated, isLoading } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$AuthContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useAuth"])();
     const router = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useRouter"])();
+    const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
+    const isLoginPage = pathname === "/admin/login";
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
-        if (!isLoading && !isAuthenticated) {
+        // Only redirect to login if we are NOT on the login page already
+        if (!isLoading && !isAuthenticated && !isLoginPage) {
             router.push("/admin/login");
         }
     }, [
         isAuthenticated,
         isLoading,
-        router
+        router,
+        isLoginPage
     ]);
+    // If on login page, just render it without layout protection
+    if (isLoginPage) {
+        return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
+            children: children
+        }, void 0, false);
+    }
     if (isLoading || !isAuthenticated) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "min-h-screen flex items-center justify-center",
@@ -301,12 +311,12 @@ function AdminLayout({ children }) {
                 className: "animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-accent"
             }, void 0, false, {
                 fileName: "[project]/src/app/admin/layout.tsx",
-                lineNumber: 21,
+                lineNumber: 29,
                 columnNumber: 17
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/admin/layout.tsx",
-            lineNumber: 20,
+            lineNumber: 28,
             columnNumber: 13
         }, this);
     }
@@ -314,7 +324,7 @@ function AdminLayout({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/src/app/admin/layout.tsx",
-        lineNumber: 26,
+        lineNumber: 34,
         columnNumber: 12
     }, this);
 }
