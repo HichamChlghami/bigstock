@@ -2,18 +2,15 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../../context/AuthContext';
-import { useData } from '../../context/DataContext';
 import { Button } from '../../components/ui/Button';
 import { Save, Database, CheckCircle, AlertCircle, BarChart3, Plus, Trash2, Edit2, X, Check, Loader2 } from 'lucide-react';
 
 export const Settings: React.FC = () => {
   const { adminEmail, updateCredentials } = useAuth();
-  const { seedDatabase, isLoading: isDataLoading } = useData();
 
   const [email, setEmail] = useState(adminEmail);
   const [password, setPassword] = useState('');
   const [message, setMessage] = useState('');
-  const [seedStatus, setSeedStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [isSavingCreds, setIsSavingCreds] = useState(false);
   const [isSavingAnalytics, setIsSavingAnalytics] = useState(false);
 
@@ -176,18 +173,6 @@ export const Settings: React.FC = () => {
     setEditingItem(null);
   };
 
-  const handleSeed = async () => {
-    if (window.confirm('Cela remplira la base de données avec les produits de démonstration. Aucune catégorie ne sera créée (vous devez les ajouter manuellement). Continuer ?')) {
-      try {
-        await seedDatabase();
-        setSeedStatus('success');
-        if (timerRef.current) clearTimeout(timerRef.current);
-        timerRef.current = setTimeout(() => setSeedStatus('idle'), 3000);
-      } catch (e) {
-        setSeedStatus('error');
-      }
-    }
-  };
 
   return (
     <div className="max-w-3xl">
@@ -360,37 +345,6 @@ export const Settings: React.FC = () => {
           </form>
         </div>
 
-        {/* Database Section */}
-        <div className="bg-white rounded-lg shadow-sm border border-gray-100 p-6">
-          <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-            <Database size={20} className="text-accent" /> Gestion de la Base de Données
-          </h2>
-
-          <p className="text-gray-600 text-sm mb-6">
-            Si votre boutique est vide, vous pouvez la remplir avec les produits de démonstration initiaux.
-          </p>
-
-          {seedStatus === 'success' && (
-            <div className="bg-green-50 text-green-600 text-sm p-3 rounded-md mb-4 border border-green-100 flex items-center gap-2">
-              <CheckCircle size={16} /> Base de données remplie avec succès !
-            </div>
-          )}
-
-          {seedStatus === 'error' && (
-            <div className="bg-red-50 text-red-600 text-sm p-3 rounded-md mb-4 border border-red-100 flex items-center gap-2">
-              <AlertCircle size={16} /> Échec du remplissage de la base de données.
-            </div>
-          )}
-
-          <Button
-            onClick={handleSeed}
-            variant="outline"
-            className="flex items-center gap-2"
-            disabled={isDataLoading}
-          >
-            {isDataLoading ? 'Traitement...' : 'Remplir la BD avec Données Démo'}
-          </Button>
-        </div>
       </div>
     </div>
   );
