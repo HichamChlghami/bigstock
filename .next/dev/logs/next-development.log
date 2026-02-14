@@ -1,13 +1,25 @@
-[00:00:36.229] Server  LOG     ✓ Ready in 31.4s
-[00:00:39.492] Server  LOG     ○ Compiling / ...
-[00:02:07.675] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:12.254] Server  LOG     ○ Compiling /api/settings ...
-[00:02:24.106] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:02:53.494] Server  LOG     ○ Compiling /_not-found/page ...
-[00:03:00.128] Server  WARN    Error: Route "/api/products/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:03:22.577] Server  LOG     ○ Compiling /api/upload ...
-[00:03:38.887] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771080472003-336357090-hicham-hicham-hichamhicham.png"
-[00:04:59.141] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771080552256-236042709-download.png"
-[00:05:13.063] Server  WARN    Error: Route "/api/products/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:05:19.307] Server  WARN    Error: Route "/api/products/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
-[00:05:32.731] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771080585847-210995650-hicham-hicham-hichamhicham.png"
+[00:00:47.891] Server  LOG     ✓ Ready in 37.1s
+[00:03:30.696] Server  LOG     ○ Compiling / ...
+[00:04:18.024] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:04:30.868] Server  LOG     ○ Compiling /api/settings ...
+[00:07:20.391] Server  LOG     ○ Compiling /admin ...
+[00:07:25.968] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:07:30.153] Server  LOG     ○ Compiling /admin/login ...
+[00:07:55.094] Server  LOG     ○ Compiling /admin/products ...
+[00:08:16.073] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771084077798-737869514-xxxx.jpeg"
+[00:08:51.571] Server  LOG     ○ Compiling /products/[slug] ...
+[00:09:14.324] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:09:25.802] Server  WARN    Error: Route "/api/products/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:30:25.988] Server  LOG     ✓ Compiled in 42.6s
+[00:30:39.696] Server  LOG     ✓ Compiled in 1348ms
+[00:35:04.295] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
+[00:35:27.015] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771085708751-589639868-hicham-hicham-hichamhicham.png"
+[00:35:33.586] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771085715308-980402258-download.png"
+[00:36:29.602] Server  WARN    Error: Route "/api/products/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:36:30.366] Server  LOG     Deleted image file: C:\Users\chlgh\OneDrive\Desktop\bigstock\public\uploads\products\1771085708751-589639868-hicham-hicham-hichamhicham.png
+[00:36:30.369] Server  LOG     Deleted image file: C:\Users\chlgh\OneDrive\Desktop\bigstock\public\uploads\products\1771085715308-980402258-download.png
+[00:44:10.099] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771086231827-443854822-hicham-hicham-hichamhicham.png"
+[00:44:15.277] Server  LOG     File written and permissions set successfully at: "C:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock\\public\\uploads\\products\\1771086237012-948847749-hicham-hicham-hichamhicham.png"
+[00:44:32.577] Server  WARN    Error: Route "/api/products/[id]" used `params.id`. `params` is a Promise and must be unwrapped with `await` or `React.use()` before accessing its properties. Learn more: https://nextjs.org/docs/messages/sync-dynamic-apis
+[00:44:32.698] Server  LOG     Deleted image file: C:\Users\chlgh\OneDrive\Desktop\bigstock\public\uploads\products\1771086231827-443854822-hicham-hicham-hichamhicham.png
+[00:44:32.702] Server  LOG     Deleted image file: C:\Users\chlgh\OneDrive\Desktop\bigstock\public\uploads\products\1771086237012-948847749-hicham-hicham-hichamhicham.png

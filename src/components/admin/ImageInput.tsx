@@ -20,6 +20,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
   const [mode, setMode] = useState<'upload' | 'url'>('upload');
   const [urlInput, setUrlInput] = useState('');
   const [error, setError] = useState('');
+  const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,6 +34,7 @@ export const ImageInput: React.FC<ImageInputProps> = ({
 
       const formData = new FormData();
       formData.append('file', file);
+      setIsUploading(true);
 
       try {
         const res = await fetch('/api/upload', {
@@ -48,6 +50,8 @@ export const ImageInput: React.FC<ImageInputProps> = ({
         }
       } catch (err) {
         setError('Upload error');
+      } finally {
+        setIsUploading(false);
       }
     }
   };
@@ -101,16 +105,29 @@ export const ImageInput: React.FC<ImageInputProps> = ({
           </div>
 
           {mode === 'upload' ? (
-            <div onClick={() => fileInputRef.current?.click()} className="cursor-pointer w-full h-full flex flex-col items-center justify-center">
-              <ImageIcon className="text-gray-400 mb-2" size={24} />
-              <span className="text-xs text-gray-500 font-medium">Click to Upload</span>
-              <span className="text-[10px] text-gray-400 mt-1">Max 1MB</span>
+            <div
+              onClick={() => !isUploading && fileInputRef.current?.click()}
+              className={`cursor-pointer w-full h-full flex flex-col items-center justify-center ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`}
+            >
+              {isUploading ? (
+                <div className="flex flex-col items-center">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-primary mb-2"></div>
+                  <span className="text-xs text-gray-500 font-medium">Uploading...</span>
+                </div>
+              ) : (
+                <>
+                  <ImageIcon className="text-gray-400 mb-2" size={24} />
+                  <span className="text-xs text-gray-500 font-medium">Click to Upload</span>
+                  <span className="text-[10px] text-gray-400 mt-1">Max 5MB</span>
+                </>
+              )}
               <input
                 type="file"
                 ref={fileInputRef}
                 className="hidden"
                 accept="image/*"
                 onChange={handleFileChange}
+                disabled={isUploading}
               />
             </div>
           ) : (

@@ -14,6 +14,7 @@ export const Products: React.FC = () => {
   const [editingProduct, setEditingProduct] = useState<Product | undefined>(undefined);
   const [searchTerm, setSearchTerm] = useState('');
   const [copiedSlug, setCopiedSlug] = useState<string | null>(null);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
 
   const filteredProducts = products.filter(p => {
     const term = searchTerm.toLowerCase();
@@ -31,9 +32,17 @@ export const Products: React.FC = () => {
     setIsFormOpen(true);
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
-      deleteProduct(id);
+      setDeletingId(id);
+      try {
+        await deleteProduct(id);
+      } catch (error) {
+        console.error('Delete error:', error);
+        alert('Erreur lors de la suppression du produit');
+      } finally {
+        setDeletingId(null);
+      }
     }
   };
 
@@ -143,8 +152,16 @@ export const Products: React.FC = () => {
                       <button onClick={() => handleEdit(product)} className="p-2 text-blue-600 hover:bg-blue-50 rounded">
                         <Edit size={16} />
                       </button>
-                      <button onClick={() => handleDelete(product.id)} className="p-2 text-red-600 hover:bg-red-50 rounded">
-                        <Trash2 size={16} />
+                      <button
+                        onClick={() => handleDelete(product.id)}
+                        disabled={deletingId === product.id}
+                        className={`p-2 rounded transition-colors ${deletingId === product.id ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'}`}
+                      >
+                        {deletingId === product.id ? (
+                          <div className="animate-spin h-4 w-4 border-2 border-red-600 border-t-transparent rounded-full"></div>
+                        ) : (
+                          <Trash2 size={16} />
+                        )}
                       </button>
                     </div>
                   </td>

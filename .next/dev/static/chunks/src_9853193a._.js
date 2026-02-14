@@ -23,6 +23,7 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
     const [mode, setMode] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('upload');
     const [urlInput, setUrlInput] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
+    const [isUploading, setIsUploading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const fileInputRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const handleFileChange = async (e)=>{
         const file = e.target.files?.[0];
@@ -34,6 +35,7 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
             setError('');
             const formData = new FormData();
             formData.append('file', file);
+            setIsUploading(true);
             try {
                 const res = await fetch('/api/upload', {
                     method: 'POST',
@@ -47,6 +49,8 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                 }
             } catch (err) {
                 setError('Upload error');
+            } finally{
+                setIsUploading(false);
             }
         }
     };
@@ -64,7 +68,7 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                 children: label
             }, void 0, false, {
                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                lineNumber: 64,
+                lineNumber: 68,
                 columnNumber: 17
             }, ("TURBOPACK compile-time value", void 0)),
             value ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -76,7 +80,7 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                         className: "w-full h-full object-contain"
                     }, void 0, false, {
                         fileName: "[project]/src/components/admin/ImageInput.tsx",
-                        lineNumber: 69,
+                        lineNumber: 73,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     onRemove && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -87,18 +91,18 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                             size: 14
                         }, void 0, false, {
                             fileName: "[project]/src/components/admin/ImageInput.tsx",
-                            lineNumber: 76,
+                            lineNumber: 80,
                             columnNumber: 15
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/admin/ImageInput.tsx",
-                        lineNumber: 71,
+                        lineNumber: 75,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                lineNumber: 67,
+                lineNumber: 71,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "w-full aspect-square bg-gray-50 rounded-lg border-2 border-dashed border-gray-300 p-4 flex flex-col items-center justify-center text-center",
@@ -115,12 +119,12 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                    lineNumber: 91,
+                                    lineNumber: 95,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 85,
+                                lineNumber: 89,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -132,63 +136,91 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                    lineNumber: 99,
+                                    lineNumber: 103,
                                     columnNumber: 15
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 93,
+                                lineNumber: 97,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/ImageInput.tsx",
-                        lineNumber: 84,
+                        lineNumber: 88,
                         columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     mode === 'upload' ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        onClick: ()=>fileInputRef.current?.click(),
-                        className: "cursor-pointer w-full h-full flex flex-col items-center justify-center",
+                        onClick: ()=>!isUploading && fileInputRef.current?.click(),
+                        className: `cursor-pointer w-full h-full flex flex-col items-center justify-center ${isUploading ? 'opacity-50 cursor-not-allowed' : ''}`,
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Image$3e$__["Image"], {
-                                className: "text-gray-400 mb-2",
-                                size: 24
-                            }, void 0, false, {
+                            isUploading ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "flex flex-col items-center",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: "animate-spin rounded-full h-6 w-6 border-b-2 border-primary mb-2"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/ImageInput.tsx",
+                                        lineNumber: 114,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-xs text-gray-500 font-medium",
+                                        children: "Uploading..."
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/ImageInput.tsx",
+                                        lineNumber: 115,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 105,
-                                columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-xs text-gray-500 font-medium",
-                                children: "Click to Upload"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 106,
-                                columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "text-[10px] text-gray-400 mt-1",
-                                children: "Max 1MB"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 107,
-                                columnNumber: 15
-                            }, ("TURBOPACK compile-time value", void 0)),
+                                lineNumber: 113,
+                                columnNumber: 17
+                            }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$image$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Image$3e$__["Image"], {
+                                        className: "text-gray-400 mb-2",
+                                        size: 24
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/ImageInput.tsx",
+                                        lineNumber: 119,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-xs text-gray-500 font-medium",
+                                        children: "Click to Upload"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/ImageInput.tsx",
+                                        lineNumber: 120,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        className: "text-[10px] text-gray-400 mt-1",
+                                        children: "Max 5MB"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/admin/ImageInput.tsx",
+                                        lineNumber: 121,
+                                        columnNumber: 19
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                 type: "file",
                                 ref: fileInputRef,
                                 className: "hidden",
                                 accept: "image/*",
-                                onChange: handleFileChange
+                                onChange: handleFileChange,
+                                disabled: isUploading
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 108,
+                                lineNumber: 124,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/ImageInput.tsx",
-                        lineNumber: 104,
+                        lineNumber: 108,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "w-full",
@@ -201,7 +233,7 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                                 className: "w-full text-xs p-2 border border-gray-300 rounded mb-2 focus:border-accent outline-none"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 118,
+                                lineNumber: 135,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$Button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -212,13 +244,13 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                                 children: "Add URL"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                                lineNumber: 125,
+                                lineNumber: 142,
                                 columnNumber: 15
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/admin/ImageInput.tsx",
-                        lineNumber: 117,
+                        lineNumber: 134,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     error && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -226,23 +258,23 @@ const ImageInput = ({ label, value, onChange, onRemove, className })=>{
                         children: error
                     }, void 0, false, {
                         fileName: "[project]/src/components/admin/ImageInput.tsx",
-                        lineNumber: 131,
+                        lineNumber: 148,
                         columnNumber: 21
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/admin/ImageInput.tsx",
-                lineNumber: 81,
+                lineNumber: 85,
                 columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/admin/ImageInput.tsx",
-        lineNumber: 63,
+        lineNumber: 67,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(ImageInput, "u2Aw7P2vAo4LUUhCRiWu+5HVjfY=");
+_s(ImageInput, "v2+xI5PO7K7XOMQ4TadkHYOruLs=");
 _c = ImageInput;
 var _c;
 __turbopack_context__.k.register(_c, "ImageInput");
@@ -1157,6 +1189,7 @@ const Products = ()=>{
     const [editingProduct, setEditingProduct] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(undefined);
     const [searchTerm, setSearchTerm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])('');
     const [copiedSlug, setCopiedSlug] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [deletingId, setDeletingId] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const filteredProducts = products.filter((p)=>{
         const term = searchTerm.toLowerCase();
         const nameMatch = p.name?.toLowerCase().includes(term);
@@ -1170,9 +1203,17 @@ const Products = ()=>{
         setEditingProduct(product);
         setIsFormOpen(true);
     };
-    const handleDelete = (id)=>{
+    const handleDelete = async (id)=>{
         if (window.confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
-            deleteProduct(id);
+            setDeletingId(id);
+            try {
+                await deleteProduct(id);
+            } catch (error) {
+                console.error('Delete error:', error);
+                alert('Erreur lors de la suppression du produit');
+            } finally{
+                setDeletingId(null);
+            }
         }
     };
     const handleCloseForm = ()=>{
@@ -1191,7 +1232,7 @@ const Products = ()=>{
             onClose: handleCloseForm
         }, void 0, false, {
             fileName: "[project]/src/views/admin/Products.tsx",
-            lineNumber: 53,
+            lineNumber: 62,
             columnNumber: 12
         }, ("TURBOPACK compile-time value", void 0));
     }
@@ -1205,7 +1246,7 @@ const Products = ()=>{
                         children: "Produits"
                     }, void 0, false, {
                         fileName: "[project]/src/views/admin/Products.tsx",
-                        lineNumber: 59,
+                        lineNumber: 68,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$components$2f$ui$2f$Button$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Button"], {
@@ -1216,20 +1257,20 @@ const Products = ()=>{
                                 size: 18
                             }, void 0, false, {
                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                lineNumber: 61,
+                                lineNumber: 70,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             " Ajouter Produit"
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/views/admin/Products.tsx",
-                        lineNumber: 60,
+                        lineNumber: 69,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/views/admin/Products.tsx",
-                lineNumber: 58,
+                lineNumber: 67,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1245,7 +1286,7 @@ const Products = ()=>{
                                     size: 20
                                 }, void 0, false, {
                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                    lineNumber: 68,
+                                    lineNumber: 77,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1256,18 +1297,18 @@ const Products = ()=>{
                                     className: "w-full pl-10 pr-4 py-2 border border-gray-200 rounded-md focus:outline-none focus:border-accent"
                                 }, void 0, false, {
                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                    lineNumber: 69,
+                                    lineNumber: 78,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/views/admin/Products.tsx",
-                            lineNumber: 67,
+                            lineNumber: 76,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/views/admin/Products.tsx",
-                        lineNumber: 66,
+                        lineNumber: 75,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1284,7 +1325,7 @@ const Products = ()=>{
                                                 children: "Produit"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                lineNumber: 83,
+                                                lineNumber: 92,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1292,7 +1333,7 @@ const Products = ()=>{
                                                 children: "Lien (Slug)"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                lineNumber: 84,
+                                                lineNumber: 93,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1300,7 +1341,7 @@ const Products = ()=>{
                                                 children: "Prix"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                lineNumber: 85,
+                                                lineNumber: 94,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1308,7 +1349,7 @@ const Products = ()=>{
                                                 children: "Stock"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                lineNumber: 86,
+                                                lineNumber: 95,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1316,7 +1357,7 @@ const Products = ()=>{
                                                 children: "Statut"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                lineNumber: 87,
+                                                lineNumber: 96,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0)),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -1324,18 +1365,18 @@ const Products = ()=>{
                                                 children: "Actions"
                                             }, void 0, false, {
                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                lineNumber: 88,
+                                                lineNumber: 97,
                                                 columnNumber: 17
                                             }, ("TURBOPACK compile-time value", void 0))
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                        lineNumber: 82,
+                                        lineNumber: 91,
                                         columnNumber: 15
                                     }, ("TURBOPACK compile-time value", void 0))
                                 }, void 0, false, {
                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 90,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0)),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -1354,7 +1395,7 @@ const Products = ()=>{
                                                                 className: "w-10 h-10 rounded object-contain bg-gray-100 border border-gray-200"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 97,
+                                                                lineNumber: 106,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                                                 className: "w-10 h-10 rounded bg-gray-200 border border-gray-300 flex items-center justify-center",
@@ -1363,12 +1404,12 @@ const Products = ()=>{
                                                                     children: "N/A"
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                                    lineNumber: 100,
+                                                                    lineNumber: 109,
                                                                     columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 99,
+                                                                lineNumber: 108,
                                                                 columnNumber: 25
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1378,7 +1419,7 @@ const Products = ()=>{
                                                                         children: product.name
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                                        lineNumber: 104,
+                                                                        lineNumber: 113,
                                                                         columnNumber: 25
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1389,7 +1430,7 @@ const Products = ()=>{
                                                                                 children: "En Vedette"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                                lineNumber: 106,
+                                                                                lineNumber: 115,
                                                                                 columnNumber: 50
                                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                                             product.isBestSeller && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1397,30 +1438,30 @@ const Products = ()=>{
                                                                                 children: "Top Vente"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                                lineNumber: 107,
+                                                                                lineNumber: 116,
                                                                                 columnNumber: 52
                                                                             }, ("TURBOPACK compile-time value", void 0))
                                                                         ]
                                                                     }, void 0, true, {
                                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                                        lineNumber: 105,
+                                                                        lineNumber: 114,
                                                                         columnNumber: 25
                                                                     }, ("TURBOPACK compile-time value", void 0))
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 103,
+                                                                lineNumber: 112,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                        lineNumber: 95,
+                                                        lineNumber: 104,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                    lineNumber: 94,
+                                                    lineNumber: 103,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1437,7 +1478,7 @@ const Products = ()=>{
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 114,
+                                                                lineNumber: 123,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1452,18 +1493,18 @@ const Products = ()=>{
                                                                             className: "text-green-500"
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/views/admin/Products.tsx",
-                                                                            lineNumber: 123,
+                                                                            lineNumber: 132,
                                                                             columnNumber: 58
                                                                         }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$copy$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Copy$3e$__["Copy"], {
                                                                             size: 12
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/views/admin/Products.tsx",
-                                                                            lineNumber: 123,
+                                                                            lineNumber: 132,
                                                                             columnNumber: 107
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                                        lineNumber: 118,
+                                                                        lineNumber: 127,
                                                                         columnNumber: 25
                                                                     }, ("TURBOPACK compile-time value", void 0)),
                                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -1475,29 +1516,29 @@ const Products = ()=>{
                                                                             size: 12
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/src/views/admin/Products.tsx",
-                                                                            lineNumber: 126,
+                                                                            lineNumber: 135,
                                                                             columnNumber: 27
                                                                         }, ("TURBOPACK compile-time value", void 0))
                                                                     }, void 0, false, {
                                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                                        lineNumber: 125,
+                                                                        lineNumber: 134,
                                                                         columnNumber: 25
                                                                     }, ("TURBOPACK compile-time value", void 0))
                                                                 ]
                                                             }, void 0, true, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 117,
+                                                                lineNumber: 126,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                        lineNumber: 113,
+                                                        lineNumber: 122,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                    lineNumber: 112,
+                                                    lineNumber: 121,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1513,13 +1554,13 @@ const Products = ()=>{
                                                             ]
                                                         }, void 0, true, {
                                                             fileName: "[project]/src/views/admin/Products.tsx",
-                                                            lineNumber: 133,
+                                                            lineNumber: 142,
                                                             columnNumber: 47
                                                         }, ("TURBOPACK compile-time value", void 0))
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                    lineNumber: 131,
+                                                    lineNumber: 140,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1527,7 +1568,7 @@ const Products = ()=>{
                                                     children: product.stockQuantity
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                    lineNumber: 135,
+                                                    lineNumber: 144,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1537,12 +1578,12 @@ const Products = ()=>{
                                                         children: product.inStock ? 'En Stock' : 'Épuisé'
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                        lineNumber: 137,
+                                                        lineNumber: 146,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                    lineNumber: 136,
+                                                    lineNumber: 145,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0)),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -1557,76 +1598,83 @@ const Products = ()=>{
                                                                     size: 16
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                                    lineNumber: 144,
+                                                                    lineNumber: 153,
                                                                     columnNumber: 25
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 143,
+                                                                lineNumber: 152,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0)),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                                                 onClick: ()=>handleDelete(product.id),
-                                                                className: "p-2 text-red-600 hover:bg-red-50 rounded",
-                                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
+                                                                disabled: deletingId === product.id,
+                                                                className: `p-2 rounded transition-colors ${deletingId === product.id ? 'text-gray-400 cursor-not-allowed' : 'text-red-600 hover:bg-red-50'}`,
+                                                                children: deletingId === product.id ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                                                    className: "animate-spin h-4 w-4 border-2 border-red-600 border-t-transparent rounded-full"
+                                                                }, void 0, false, {
+                                                                    fileName: "[project]/src/views/admin/Products.tsx",
+                                                                    lineNumber: 161,
+                                                                    columnNumber: 27
+                                                                }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$trash$2d$2$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Trash2$3e$__["Trash2"], {
                                                                     size: 16
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                                    lineNumber: 147,
-                                                                    columnNumber: 25
+                                                                    lineNumber: 163,
+                                                                    columnNumber: 27
                                                                 }, ("TURBOPACK compile-time value", void 0))
                                                             }, void 0, false, {
                                                                 fileName: "[project]/src/views/admin/Products.tsx",
-                                                                lineNumber: 146,
+                                                                lineNumber: 155,
                                                                 columnNumber: 23
                                                             }, ("TURBOPACK compile-time value", void 0))
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/src/views/admin/Products.tsx",
-                                                        lineNumber: 142,
+                                                        lineNumber: 151,
                                                         columnNumber: 21
                                                     }, ("TURBOPACK compile-time value", void 0))
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                                    lineNumber: 141,
+                                                    lineNumber: 150,
                                                     columnNumber: 19
                                                 }, ("TURBOPACK compile-time value", void 0))
                                             ]
                                         }, product.id, true, {
                                             fileName: "[project]/src/views/admin/Products.tsx",
-                                            lineNumber: 93,
+                                            lineNumber: 102,
                                             columnNumber: 17
                                         }, ("TURBOPACK compile-time value", void 0)))
                                 }, void 0, false, {
                                     fileName: "[project]/src/views/admin/Products.tsx",
-                                    lineNumber: 91,
+                                    lineNumber: 100,
                                     columnNumber: 13
                                 }, ("TURBOPACK compile-time value", void 0))
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/views/admin/Products.tsx",
-                            lineNumber: 80,
+                            lineNumber: 89,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/views/admin/Products.tsx",
-                        lineNumber: 79,
+                        lineNumber: 88,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/views/admin/Products.tsx",
-                lineNumber: 65,
+                lineNumber: 74,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/views/admin/Products.tsx",
-        lineNumber: 57,
+        lineNumber: 66,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(Products, "H6i4HOoNTlS6hNL7KeliBAUpKSE=", false, function() {
+_s(Products, "eEhLp7lrNI9PRYh1urb+55ak+Eo=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$context$2f$DataContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useData"]
     ];
