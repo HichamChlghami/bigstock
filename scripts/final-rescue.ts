@@ -9,7 +9,8 @@ dotenv.config();
 
 const mongodbUri = process.env.MONGODB_URI;
 // Use the exact path provided in user_information
-const BASE_PATH = 'c:\\Users\\chlgh\\OneDrive\\Desktop\\bigstock';
+// Use dynamic path instead of hardcoded local path for portability
+const BASE_PATH = process.cwd();
 const UPLOAD_DIR = join(BASE_PATH, 'public', 'uploads', 'products');
 
 if (!mongodbUri) {
