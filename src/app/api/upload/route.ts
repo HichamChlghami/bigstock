@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, mkdir, chmod } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
@@ -36,10 +36,11 @@ export async function POST(request: Request) {
 
         try {
             await writeFile(path, buffer);
-            console.log('File written successfully to:', path);
+            await chmod(path, 0o644); // Ensure the file is readable by the web server (everyone)
+            console.log('File written and permissions set successfully at:', path);
         } catch (writeError) {
-            console.error('File Write Error:', writeError);
-            return NextResponse.json({ error: 'Failed to write file to disk' }, { status: 500 });
+            console.error('File Write/Permission Error:', writeError);
+            return NextResponse.json({ error: 'Failed to write file or set permissions' }, { status: 500 });
         }
 
         // Return the public URL
